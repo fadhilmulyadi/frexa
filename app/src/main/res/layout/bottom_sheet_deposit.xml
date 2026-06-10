@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:orientation="vertical" android:padding="24dp">
+
+    <View android:layout_width="40dp" android:layout_height="4dp"
+        android:layout_gravity="center_horizontal" android:layout_marginBottom="20dp"
+        android:background="#CCCCCC" />
+
+    <!-- Step 0: Pilih metode -->
+    <LinearLayout android:id="@+id/vg_main"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Deposit Saldo Virtual" android:textStyle="bold" android:textSize="18sp"
+            android:layout_marginBottom="16dp" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Pilih jumlah deposit untuk menambah saldo virtual Anda."
+            android:textColor="?attr/colorOnSurfaceVariant" android:layout_marginBottom="16dp" />
+    </LinearLayout>
+
+    <!-- Step 1: Nominal -->
+    <LinearLayout android:id="@+id/vg_nominal"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical" android:visibility="gone">
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Nominal Deposit" android:textStyle="bold" android:textSize="18sp"
+            android:layout_marginBottom="12dp" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="$50,000 akan ditambahkan ke saldo virtual Anda."
+            android:textColor="?attr/colorOnSurfaceVariant" />
+    </LinearLayout>
+
+    <!-- Step 2: Konfirmasi -->
+    <LinearLayout android:id="@+id/vg_confirm"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical" android:visibility="gone">
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Konfirmasi" android:textStyle="bold" android:textSize="18sp"
+            android:layout_marginBottom="12dp" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Konfirmasi penambahan $50,000 ke saldo virtual Anda."
+            android:textColor="?attr/colorOnSurfaceVariant" />
+    </LinearLayout>
+
+    <!-- Step 3: QR -->
+    <LinearLayout android:id="@+id/vg_qr"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical" android:gravity="center" android:visibility="gone">
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Scan QR" android:textStyle="bold" android:textSize="18sp"
+            android:layout_marginBottom="16dp" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="🔲" android:textSize="80sp" android:layout_marginBottom="16dp" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Tekan tombol di bawah setelah pembayaran selesai."
+            android:textColor="?attr/colorOnSurfaceVariant" android:gravity="center" />
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:layout_marginTop="24dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_close"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="wrap_content" android:layout_height="48dp"
+            android:text="Tutup" android:layout_marginEnd="8dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_back"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="wrap_content" android:layout_height="48dp"
+            android:text="Kembali" android:visibility="gone" android:layout_marginEnd="8dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_next"
+            android:layout_width="0dp" android:layout_height="48dp"
+            android:layout_weight="1" android:text="Selanjutnya" />
+
+    </LinearLayout>
+</LinearLayout>

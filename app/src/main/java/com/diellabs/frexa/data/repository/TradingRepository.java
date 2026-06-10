@@ -51,6 +51,10 @@ public class TradingRepository {
         exec.diskIO().execute(() -> dao.update(t));
     }
 
+    public int getTotalTrades() { return dao.getTotalTrades(); }
+    public int getWinCount() { return dao.getWinCount(); }
+    public double getBestProfit() { return dao.getBestProfit(); }
+
     public void getStats(StatCallback cb) {
         exec.diskIO().execute(() -> {
             int total = dao.getTotalTrades(), wins = dao.getWinCount();

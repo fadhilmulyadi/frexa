@@ -30,23 +30,23 @@
         android:name="com.diellabs.frexa.ui.notification.NotificationFragment" />
 
     <fragment android:id="@+id/assetDetailFragment"
-        android:name="com.diellabs.frexa.ui.asset.AssetDetailFragment">
+        android:name="com.diellabs.frexa.ui.home.AssetDetailFragment">
         <argument android:name="coinId" app:argType="string" />
         <action android:id="@+id/action_asset_to_quote_history"
             app:destination="@id/quoteHistoryFragment" />
     </fragment>
 
     <fragment android:id="@+id/quoteHistoryFragment"
-        android:name="com.diellabs.frexa.ui.asset.QuoteHistoryFragment">
-        <argument android:name="coinId" app:argType="string" />
-        <argument android:name="coinName" app:argType="string" />
+        android:name="com.diellabs.frexa.ui.home.QuoteHistoryFragment">
+        <argument android:name="coinId" app:argType="string" android:defaultValue="bitcoin" />
+        <argument android:name="coinName" app:argType="string" android:defaultValue="" />
     </fragment>
 
     <fragment android:id="@+id/addAccountFragment"
-        android:name="com.diellabs.frexa.ui.account.AddAccountFragment">
+        android:name="com.diellabs.frexa.ui.home.AddAccountFragment">
         <action android:id="@+id/action_add_account_to_name"
             app:destination="@id/addAccountNameFragment" />
     </fragment>
     <fragment android:id="@+id/addAccountNameFragment"
-        android:name="com.diellabs.frexa.ui.account.AddAccountNameFragment" />
+        android:name="com.diellabs.frexa.ui.home.AddAccountNameFragment" />
 </navigation>
