@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/homeFragment"
+        android:icon="@drawable/ic_home" android:title="@string/tab_home" />
+    <item android:id="@+id/transaksiFragment"
+        android:icon="@drawable/ic_transaksi" android:title="@string/tab_transaksi" />
+    <item android:id="@+id/terminalFragment"
+        android:icon="@drawable/ic_terminal" android:title="@string/tab_terminal" />
+    <item android:id="@+id/bantuanFragment"
+        android:icon="@drawable/ic_bantuan" android:title="@string/tab_bantuan" />
+</menu>
