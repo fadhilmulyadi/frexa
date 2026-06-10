@@ -1,5 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!-- Brand -->
+    <color name="frx_green">#3EE87A</color>
+    <color name="frx_lime">#BDF94E</color>
+    <color name="frx_gold">#F0B429</color>
+
+    <!-- Semantic -->
+    <color name="frx_up">#36E07A</color>
+    <color name="frx_down">#FF5D5D</color>
+
+    <!-- Dark surfaces -->
+    <color name="frx_bg">#0A0B0D</color>
+    <color name="frx_surface">#17181B</color>
+    <color name="frx_surface_2">#1F2024</color>
+    <color name="frx_surface_3">#292A2F</color>
+
+    <!-- Dark text -->
+    <color name="frx_text">#F4F5F7</color>
+    <color name="frx_text_2">#9A9DA3</color>
+    <color name="frx_text_3">#63666C</color>
+    <color name="frx_hairline">#2A2B30</color>
+
+    <!-- Light surfaces -->
+    <color name="frx_bg_light">#F4F5F7</color>
+    <color name="frx_surface_light">#FFFFFF</color>
+    <color name="frx_surface_2_light">#F0F1F3</color>
+    <color name="frx_surface_3_light">#E5E6EA</color>
+
+    <!-- Light text -->
+    <color name="frx_text_light">#0A0B0D</color>
+    <color name="frx_text_2_light">#4A4D55</color>
+    <color name="frx_text_3_light">#9A9DA3</color>
+    <color name="frx_hairline_light">#E0E1E5</color>
 </resources>
