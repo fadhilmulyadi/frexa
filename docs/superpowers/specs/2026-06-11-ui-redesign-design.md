@@ -161,17 +161,27 @@ Full-screen sheet, 4-step internal navigation:
 
 ---
 
-## 5. New Icons (Vector Drawables)
-Replace all emoji/system icons with custom stroke vectors:
-- `ic_person.xml` (avatar)
-- `ic_bell.xml` (notification)  
-- `ic_wallet.xml` (account/deposit)
-- `ic_market.xml` (bottom nav Market)
-- `ic_gear.xml` (settings)
-- `ic_chevron_right.xml` (list row arrow)
-- `ic_clock.xml` (trade duration button)
-- `ic_plus.xml`, `ic_minus.xml` (steppers)
-- `ic_question_circle.xml`, `ic_info_circle.xml`, `ic_graduation.xml`, `ic_chart_line.xml` (Bantuan cards)
+## 5. Icons
+Use **Lucide icons** (preferred) or **Google Material Icons** — imported as vector XML drawables via Android Studio "Import Vector Asset". Do NOT draw icons from scratch.
+
+Mapping:
+| File | Lucide name | Material fallback |
+|---|---|---|
+| `ic_person.xml` | `user` | `person` |
+| `ic_bell.xml` | `bell` | `notifications` |
+| `ic_wallet.xml` | `wallet` | `account_balance_wallet` |
+| `ic_market.xml` | `shopping-bag` | `storefront` |
+| `ic_gear.xml` | `settings` | `settings` |
+| `ic_chevron_right.xml` | `chevron-right` | `chevron_right` |
+| `ic_clock.xml` | `clock` | `schedule` |
+| `ic_plus.xml` | `plus` | `add` |
+| `ic_minus.xml` | `minus` | `remove` |
+| `ic_question_circle.xml` | `circle-help` | `help_outline` |
+| `ic_info_circle.xml` | `info` | `info_outline` |
+| `ic_graduation.xml` | `graduation-cap` | `school` |
+| `ic_chart_line.xml` | `trending-up` | `trending_up` |
+| `ic_copy.xml` | `copy` | `content_copy` |
+| `ic_triangle_up.xml` | `triangle` | `arrow_drop_up` |
 
 ---
 
