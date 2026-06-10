@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:background="?attr/colorSurface">
+
+    <LinearLayout android:id="@+id/topbar"
+        android:layout_width="match_parent" android:layout_height="64dp"
+        android:orientation="horizontal" android:padding="16dp" android:gravity="center_vertical">
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+            android:layout_weight="1" android:orientation="vertical">
+            <TextView android:id="@+id/tv_pair"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textStyle="bold" android:textSize="18sp" android:text="BTC/USD" />
+            <TextView android:id="@+id/tv_live_price"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textSize="14sp" android:textColor="@color/frx_green" />
+        </LinearLayout>
+        <TextView android:id="@+id/tv_profit_pct"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:textStyle="bold" android:textSize="16sp" android:textColor="@color/frx_green"
+            android:layout_marginEnd="12dp" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_deposit"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="wrap_content" android:layout_height="36dp"
+            android:text="Deposit" android:textSize="12sp" />
+    </LinearLayout>
+
+    <com.diellabs.frexa.ui.terminal.CandlestickChartView
+        android:id="@+id/chart"
+        android:layout_width="match_parent" android:layout_height="0dp"
+        android:layout_weight="1" android:background="?attr/colorSurfaceVariant" />
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:padding="16dp" android:gravity="center_vertical">
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Durasi" android:textStyle="bold" android:layout_marginEnd="8dp" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_duration"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="wrap_content" android:layout_height="40dp"
+            android:text="1 mnt" />
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:padding="16dp" android:gravity="center_vertical">
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Nominal" android:textStyle="bold" android:layout_marginEnd="8dp" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_stake_minus"
+            android:layout_width="40dp" android:layout_height="40dp"
+            android:text="−" android:textSize="18sp" />
+        <TextView android:id="@+id/tv_stake"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+            android:layout_weight="1" android:gravity="center"
+            android:textStyle="bold" android:textSize="16sp" android:text="$10" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_stake_plus"
+            android:layout_width="40dp" android:layout_height="40dp"
+            android:text="+" android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="56dp"
+        android:orientation="horizontal" android:padding="16dp" android:weightSum="2">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_down"
+            android:layout_width="0dp" android:layout_height="match_parent"
+            android:layout_weight="1" android:layout_marginEnd="8dp"
+            android:text="▼ TURUN" android:backgroundTint="@color/frx_down"
+            android:textColor="#fff" android:textStyle="bold" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_up"
+            android:layout_width="0dp" android:layout_height="match_parent"
+            android:layout_weight="1" android:layout_marginStart="8dp"
+            android:text="▲ NAIK" android:backgroundTint="@color/frx_up"
+            android:textColor="#fff" android:textStyle="bold" />
+    </LinearLayout>
+
+    <TextView android:id="@+id/tv_offline"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:background="@color/frx_down" android:textColor="#fff"
+        android:padding="8dp" android:gravity="center"
+        android:text="@string/banner_offline" android:visibility="gone" />
+
+</LinearLayout>
