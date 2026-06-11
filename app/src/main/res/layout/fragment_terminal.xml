@@ -69,6 +69,100 @@
         </FrameLayout>
     </RelativeLayout>
 
+    <!-- Timeframe toggle -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:paddingBottom="4dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_tf_1m"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="3dp"
+            android:text="1m"
+            android:textSize="11sp"
+            android:textAllCaps="false"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            app:backgroundTint="@color/frx_green"
+            app:strokeColor="@android:color/transparent"
+            app:strokeWidth="0dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_tf_5m"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:layout_marginStart="3dp"
+            android:layout_marginEnd="3dp"
+            android:text="5m"
+            android:textSize="11sp"
+            android:textAllCaps="false"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            app:backgroundTint="@android:color/transparent"
+            app:strokeColor="@color/frx_text_3"
+            app:strokeWidth="1dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_tf_15m"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:layout_marginStart="3dp"
+            android:layout_marginEnd="3dp"
+            android:text="15m"
+            android:textSize="11sp"
+            android:textAllCaps="false"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            app:backgroundTint="@android:color/transparent"
+            app:strokeColor="@color/frx_text_3"
+            app:strokeWidth="1dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_tf_30m"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:layout_marginStart="3dp"
+            android:layout_marginEnd="3dp"
+            android:text="30m"
+            android:textSize="11sp"
+            android:textAllCaps="false"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            app:backgroundTint="@android:color/transparent"
+            app:strokeColor="@color/frx_text_3"
+            app:strokeWidth="1dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_tf_1h"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:layout_marginStart="3dp"
+            android:text="1h"
+            android:textSize="11sp"
+            android:textAllCaps="false"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            app:backgroundTint="@android:color/transparent"
+            app:strokeColor="@color/frx_text_3"
+            app:strokeWidth="1dp" />
+
+    </LinearLayout>
+
     <!-- Chart -->
     <com.diellabs.frexa.ui.terminal.CandlestickChartView
         android:id="@+id/chart"
@@ -258,11 +352,10 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.4"
-                android:backgroundTint="@android:color/transparent"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
-                app:backgroundTint="@null"
                 android:background="@drawable/btn_cta_grad"
+                app:backgroundTint="@null"
                 android:text="Naik"
                 android:textAllCaps="false"
                 android:textColor="@color/frx_cta_text"
