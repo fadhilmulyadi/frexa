@@ -6,8 +6,11 @@ import com.diellabs.frexa.data.local.dao.CachedPriceDao;
 import com.diellabs.frexa.data.local.db.FrxDatabase;
 import com.diellabs.frexa.data.local.entity.CachedPriceEntity;
 import com.diellabs.frexa.data.remote.api.CoinGeckoService;
+import com.diellabs.frexa.data.remote.api.CoinSymbolMapper;
+import com.diellabs.frexa.data.remote.api.CryptoCompareService;
 import com.diellabs.frexa.data.remote.api.RetrofitClient;
 import com.diellabs.frexa.data.remote.model.*;
+import com.diellabs.frexa.data.remote.model.CryptoCompareHistominute;
 import com.diellabs.frexa.util.AppExecutors;
 import java.util.*;
 import retrofit2.Call;
@@ -16,6 +19,7 @@ import retrofit2.Response;
 
 public class CryptoRepository {
     private final CoinGeckoService api;
+    private final CryptoCompareService cryptoCompareApi;
     private final CachedPriceDao cacheDao;
     private final AppExecutors exec;
 
@@ -32,6 +36,7 @@ public class CryptoRepository {
 
     public CryptoRepository(Context ctx) {
         api = RetrofitClient.getCoinGeckoService();
+        cryptoCompareApi = RetrofitClient.getCryptoCompareService();
         cacheDao = FrxDatabase.getInstance(ctx).cachedPriceDao();
         exec = AppExecutors.getInstance();
     }
@@ -121,6 +126,49 @@ public class CryptoRepository {
             }
             @Override public void onFailure(Call<MarketChart> c, Throwable t) {}
         });
+    }
+
+    public void fetchCryptoCompareKlines(String fsym, int seconds, int limit, OhlcCallback callback) {
+        if (CoinSymbolMapper.isHourly(seconds)) {
+            cryptoCompareApi.getHistoHour(fsym, "USD", limit)
+                .enqueue(new Callback<CryptoCompareHistominute>() {
+                    @Override
+                    public void onResponse(Call<CryptoCompareHistominute> c,
+                                           Response<CryptoCompareHistominute> r) {
+                        if (r.isSuccessful() && r.body() != null
+                                && r.body().data != null && r.body().data.data != null) {
+                            callback.onResult(toOhlcList(r.body().data.data));
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<CryptoCompareHistominute> c, Throwable t) {}
+                });
+        } else {
+            int aggregate = CoinSymbolMapper.toAggregate(seconds);
+            cryptoCompareApi.getHistoMinute(fsym, "USD", limit, aggregate)
+                .enqueue(new Callback<CryptoCompareHistominute>() {
+                    @Override
+                    public void onResponse(Call<CryptoCompareHistominute> c,
+                                           Response<CryptoCompareHistominute> r) {
+                        if (r.isSuccessful() && r.body() != null
+                                && r.body().data != null && r.body().data.data != null) {
+                            callback.onResult(toOhlcList(r.body().data.data));
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<CryptoCompareHistominute> c, Throwable t) {}
+                });
+        }
+    }
+
+    private List<List<Double>> toOhlcList(List<CryptoCompareHistominute.Candle> candles) {
+        List<List<Double>> result = new ArrayList<>();
+        for (CryptoCompareHistominute.Candle c : candles) {
+            if (c.open > 0 && c.close > 0) {
+                result.add(Arrays.asList(c.time * 1000.0, c.open, c.high, c.low, c.close));
+            }
+        }
+        return result;
     }
 
     private void saveToCache(List<CoinMarket> coins) {
