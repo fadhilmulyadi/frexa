@@ -19,7 +19,5 @@ public class UserRepository {
     public String getUserEmail() { return prefs.getUserEmail(); }
     public String getUserPhone() { return prefs.getUserPhone(); }
     public float getBalance() { return prefs.getBalance(); }
-    public String getTheme() { return prefs.getThemeMode(); }
-    public void setTheme(String m) { prefs.setThemeMode(m); }
     public void logout() { prefs.logout(); }
 }

@@ -27,7 +27,5 @@ public class UserViewModel extends AndroidViewModel {
     public String getUserEmail() { return repo.getUserEmail(); }
     public String getUserPhone() { return repo.getUserPhone(); }
     public float getBalance() { return repo.getBalance(); }
-    public String getTheme() { return repo.getTheme(); }
-    public void setTheme(String m) { repo.setTheme(m); }
     public void logout() { repo.logout(); isLoggedIn.setValue(false); }
 }

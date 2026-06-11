@@ -10,7 +10,6 @@ public class UserPrefs {
     private static final String KEY_USER_EMAIL = "user_email";
     private static final String KEY_USER_PHONE = "user_phone";
     private static final String KEY_BALANCE = "virtual_balance";
-    private static final String KEY_THEME = "theme_mode";
     private static final String KEY_ACTIVE_COIN = "active_coin_id";
 
     private final SharedPreferences prefs;
@@ -34,9 +33,6 @@ public class UserPrefs {
 
     public float getBalance() { return prefs.getFloat(KEY_BALANCE, 10000.0f); }
     public void setBalance(float v) { prefs.edit().putFloat(KEY_BALANCE, v).apply(); }
-
-    public String getThemeMode() { return prefs.getString(KEY_THEME, "dark"); }
-    public void setThemeMode(String v) { prefs.edit().putString(KEY_THEME, v).apply(); }
 
     public String getActiveCoinId() { return prefs.getString(KEY_ACTIVE_COIN, "bitcoin"); }
     public void setActiveCoinId(String v) { prefs.edit().putString(KEY_ACTIVE_COIN, v).apply(); }

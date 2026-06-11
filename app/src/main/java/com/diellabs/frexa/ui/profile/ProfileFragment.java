@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -36,15 +35,6 @@ public class ProfileFragment extends Fragment {
 
         binding.tvUserName.setText(prefs.getUserName());
         binding.tvUserId.setText(prefs.getUserEmail());
-
-        boolean isDark = "dark".equals(prefs.getThemeMode());
-        binding.switchTheme.setChecked(isDark);
-        binding.switchTheme.setOnCheckedChangeListener((btn, checked) -> {
-            String mode = checked ? "dark" : "light";
-            prefs.setThemeMode(mode);
-            AppCompatDelegate.setDefaultNightMode(
-                    checked ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
-        });
 
         binding.btnBack.setOnClickListener(v ->
                 Navigation.findNavController(v).navigateUp());
