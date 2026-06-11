@@ -19,6 +19,14 @@ public class CryptoRepository {
     private final CachedPriceDao cacheDao;
     private final AppExecutors exec;
 
+    public interface OhlcCallback {
+        void onResult(List<List<Double>> data);
+    }
+
+    public interface PriceCallback {
+        void onPrice(double price);
+    }
+
     public CryptoRepository(Context ctx) {
         api = RetrofitClient.getCoinGeckoService();
         cacheDao = FrxDatabase.getInstance(ctx).cachedPriceDao();
@@ -69,6 +77,36 @@ public class CryptoRepository {
             }
             @Override public void onFailure(Call<List<List<Double>>> c, Throwable t) {}
         });
+    }
+
+    public void fetchOhlc(String coinId, OhlcCallback callback) {
+        api.getOhlc(coinId, "usd", 1).enqueue(new Callback<List<List<Double>>>() {
+            @Override public void onResponse(Call<List<List<Double>>> c,
+                                             Response<List<List<Double>>> r) {
+                if (r.isSuccessful() && r.body() != null) callback.onResult(r.body());
+            }
+            @Override public void onFailure(Call<List<List<Double>>> c, Throwable t) {}
+        });
+    }
+
+    public void fetchLivePrice(String coinId, PriceCallback callback,
+                                MutableLiveData<String> error) {
+        api.getPrices(coinId, "usd", false)
+           .enqueue(new Callback<Map<String, Map<String, Double>>>() {
+               @Override public void onResponse(Call<Map<String, Map<String, Double>>> c,
+                                                Response<Map<String, Map<String, Double>>> r) {
+                   if (r.isSuccessful() && r.body() != null) {
+                       Map<String, Double> inner = r.body().get(coinId);
+                       if (inner != null && inner.get("usd") != null) {
+                           callback.onPrice(inner.get("usd"));
+                       }
+                   }
+               }
+               @Override public void onFailure(Call<Map<String, Map<String, Double>>> c,
+                                               Throwable t) {
+                   error.postValue("Tidak ada koneksi");
+               }
+           });
     }
 
     public void fetchMarketChart(String coinId, MutableLiveData<MarketChart> chart) {
