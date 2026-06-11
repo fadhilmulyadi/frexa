@@ -1,5 +1,7 @@
 package com.diellabs.frexa.ui.terminal;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.Toast;
@@ -13,6 +15,7 @@ import com.diellabs.frexa.util.CurrencyFormatter;
 import com.diellabs.frexa.util.UserPrefs;
 import com.diellabs.frexa.viewmodel.CryptoViewModel;
 import com.diellabs.frexa.viewmodel.TradingViewModel;
+import com.google.android.material.button.MaterialButton;
 
 public class TerminalFragment extends Fragment {
     private FragmentTerminalBinding b;
@@ -28,6 +31,8 @@ public class TerminalFragment extends Fragment {
     private int profitPercent = 85;
     private double currentPrice = 0;
 
+    private static final int COLOR_ACTIVE = 0xFF36E07A;
+
     @Nullable @Override
     public View onCreateView(@NonNull LayoutInflater inf, ViewGroup parent, Bundle saved) {
         b = FragmentTerminalBinding.inflate(inf, parent, false);
@@ -42,53 +47,25 @@ public class TerminalFragment extends Fragment {
         String coinId = prefs.getActiveCoinId();
         cryptoVm.setActiveCoin(coinId);
 
-        b.tvStake.setText(CurrencyFormatter.formatUsd(stakeAmount));
-        b.btnStakeMinus.setOnClickListener(x -> {
-            stakeAmount = Math.max(1, stakeAmount - 1);
-            b.tvStake.setText(CurrencyFormatter.formatUsd(stakeAmount));
-        });
-        b.btnStakePlus.setOnClickListener(x -> {
-            stakeAmount += 1;
-            b.tvStake.setText(CurrencyFormatter.formatUsd(stakeAmount));
-        });
-
-        b.btnDuration.setOnClickListener(x -> {
-            DurationBottomSheetFragment sheet = new DurationBottomSheetFragment();
-            sheet.setCallback((sec, label) -> {
-                durationSeconds = sec; durationLabel = label;
-                b.tvDuration.setText(label);
-                // Update index for stepper sync
-                for(int i=0; i<DURATIONS.length; i++) {
-                    if(DURATIONS[i] == sec) { durationIndex = i; break; }
-                }
-            });
-            sheet.show(getChildFragmentManager(), "duration");
-        });
-
-        b.btnDurationMinus.setOnClickListener(x -> {
-            if (durationIndex > 0) {
-                durationIndex--;
-                updateDurationUI();
-            }
-        });
-        b.btnDurationPlus.setOnClickListener(x -> {
-            if (durationIndex < DURATIONS.length - 1) {
-                durationIndex++;
-                updateDurationUI();
-            }
-        });
+        setupStakeControls();
+        setupDurationControls();
+        setupTimeframeButtons();
 
         b.btnWallet.setOnClickListener(x ->
             new DepositBottomSheetFragment().show(getChildFragmentManager(), "deposit"));
 
+        // Chart update dari chartCandles (real-time)
+        cryptoVm.chartCandles.observe(getViewLifecycleOwner(),
+            data -> b.chart.setOhlcData(data));
+
+        // Harga live → update price line di chart
         cryptoVm.livePrice.observe(getViewLifecycleOwner(), price -> {
             currentPrice = price;
+            b.chart.setCurrentPrice(price);
         });
 
         tradingVm.virtualBalance.observe(getViewLifecycleOwner(), bal ->
             b.tvBalance.setText(CurrencyFormatter.formatBalance(bal)));
-
-        cryptoVm.ohlcData.observe(getViewLifecycleOwner(), data -> b.chart.setOhlcData(data));
 
         cryptoVm.coinList.observe(getViewLifecycleOwner(), coins -> {
             coins.stream().filter(c -> c.id.equals(coinId)).findFirst().ifPresent(c -> {
@@ -105,6 +82,82 @@ public class TerminalFragment extends Fragment {
 
         b.btnUp.setOnClickListener(x -> placeTrade("UP"));
         b.btnDown.setOnClickListener(x -> placeTrade("DOWN"));
+    }
+
+    private void setupStakeControls() {
+        b.tvStake.setText(CurrencyFormatter.formatUsd(stakeAmount));
+        b.btnStakeMinus.setOnClickListener(x -> {
+            stakeAmount = Math.max(1, stakeAmount - 1);
+            b.tvStake.setText(CurrencyFormatter.formatUsd(stakeAmount));
+        });
+        b.btnStakePlus.setOnClickListener(x -> {
+            stakeAmount += 1;
+            b.tvStake.setText(CurrencyFormatter.formatUsd(stakeAmount));
+        });
+    }
+
+    private void setupDurationControls() {
+        b.btnDuration.setOnClickListener(x -> {
+            DurationBottomSheetFragment sheet = new DurationBottomSheetFragment();
+            sheet.setCallback((sec, label) -> {
+                durationSeconds = sec;
+                durationLabel = label;
+                b.tvDuration.setText(label);
+                for (int i = 0; i < DURATIONS.length; i++) {
+                    if (DURATIONS[i] == sec) { durationIndex = i; break; }
+                }
+            });
+            sheet.show(getChildFragmentManager(), "duration");
+        });
+
+        b.btnDurationMinus.setOnClickListener(x -> {
+            if (durationIndex > 0) { durationIndex--; updateDurationUI(); }
+        });
+        b.btnDurationPlus.setOnClickListener(x -> {
+            if (durationIndex < DURATIONS.length - 1) { durationIndex++; updateDurationUI(); }
+        });
+    }
+
+    private final MaterialButton[] tfButtons = new MaterialButton[5];
+
+    private void setupTimeframeButtons() {
+        tfButtons[0] = b.btnTf1m;
+        tfButtons[1] = b.btnTf5m;
+        tfButtons[2] = b.btnTf15m;
+        tfButtons[3] = b.btnTf30m;
+        tfButtons[4] = b.btnTf1h;
+
+        int[] seconds = {60, 300, 900, 1800, 3600};
+
+        for (int i = 0; i < tfButtons.length; i++) {
+            final int idx = i;
+            final int sec = seconds[i];
+            tfButtons[i].setOnClickListener(x -> selectTimeframe(sec, idx));
+        }
+
+        // Default aktif: tombol pertama (1m)
+        highlightTimeframeButton(0);
+    }
+
+    private void selectTimeframe(int seconds, int index) {
+        cryptoVm.setTimeframe(seconds);
+        highlightTimeframeButton(index);
+    }
+
+    private void highlightTimeframeButton(int activeIndex) {
+        for (int i = 0; i < tfButtons.length; i++) {
+            if (i == activeIndex) {
+                tfButtons[i].setBackgroundTintList(
+                    ColorStateList.valueOf(COLOR_ACTIVE));
+                tfButtons[i].setStrokeWidth(0);
+            } else {
+                tfButtons[i].setBackgroundTintList(
+                    ColorStateList.valueOf(Color.TRANSPARENT));
+                tfButtons[i].setStrokeWidth(2);
+                tfButtons[i].setStrokeColor(
+                    ColorStateList.valueOf(0xFF4A4D55));
+            }
+        }
     }
 
     private void updateDurationUI() {
@@ -127,7 +180,9 @@ public class TerminalFragment extends Fragment {
         if (cryptoVm.coinList.getValue() != null) {
             cryptoVm.coinList.getValue().stream()
                 .filter(c -> c.id.equals(coinId)).findFirst().ifPresent(c -> {
-                    nameSymbolImg[0] = c.name; nameSymbolImg[1] = c.symbol; nameSymbolImg[2] = c.image;
+                    nameSymbolImg[0] = c.name;
+                    nameSymbolImg[1] = c.symbol;
+                    nameSymbolImg[2] = c.image;
                 });
         }
         tradingVm.placeTrade(coinId, nameSymbolImg[0], nameSymbolImg[1], nameSymbolImg[2],
