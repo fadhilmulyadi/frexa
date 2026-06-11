@@ -19,7 +19,8 @@
     <color name="frx_text">#F4F5F7</color>
     <color name="frx_text_2">#9A9DA3</color>
     <color name="frx_text_3">#63666C</color>
-    <color name="frx_hairline">#2A2B30</color>
+    <color name="frx_hairline">#12FFFFFF</color>
+    <color name="frx_cta_text">#04210F</color>
 
     <!-- Light surfaces -->
     <color name="frx_bg_light">#F4F5F7</color>
