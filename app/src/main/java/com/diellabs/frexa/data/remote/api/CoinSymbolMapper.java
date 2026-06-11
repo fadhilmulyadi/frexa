@@ -35,18 +35,18 @@ public final class CoinSymbolMapper {
         COIN_TO_BASE.put("internet-computer",  "ICP");
     }
 
-    public static String toMexcSymbol(String coinId) {
+    public static String toBitgetSymbol(String coinId) {
         String base = COIN_TO_BASE.get(coinId);
         if (base == null) base = coinId.replace("-", "").toUpperCase();
         return base + "USDT";
     }
 
-    public static String toMexcInterval(int seconds) {
-        if (seconds >= 86400) return "1d";
+    public static String toBitgetGranularity(int seconds) {
+        if (seconds >= 86400) return "1day";
         if (seconds >= 14400) return "4h";
         if (seconds >= 3600)  return "1h";
-        if (seconds >= 900)   return "15m";
-        if (seconds >= 300)   return "5m";
-        return "1m";
+        if (seconds >= 900)   return "15min";
+        if (seconds >= 300)   return "5min";
+        return "1min";
     }
 }

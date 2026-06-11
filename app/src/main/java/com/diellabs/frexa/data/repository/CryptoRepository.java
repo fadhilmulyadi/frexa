@@ -5,12 +5,14 @@ import androidx.lifecycle.MutableLiveData;
 import com.diellabs.frexa.data.local.dao.CachedPriceDao;
 import com.diellabs.frexa.data.local.db.FrxDatabase;
 import com.diellabs.frexa.data.local.entity.CachedPriceEntity;
+import com.diellabs.frexa.data.remote.api.BitgetService;
 import com.diellabs.frexa.data.remote.api.CoinGeckoService;
 import com.diellabs.frexa.data.remote.api.CoinSymbolMapper;
-import com.diellabs.frexa.data.remote.api.MexcService;
 import com.diellabs.frexa.data.remote.api.RetrofitClient;
 import com.diellabs.frexa.data.remote.model.*;
 import com.diellabs.frexa.util.AppExecutors;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import java.util.*;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -18,7 +20,7 @@ import retrofit2.Response;
 
 public class CryptoRepository {
     private final CoinGeckoService api;
-    private final MexcService mexcApi;
+    private final BitgetService bitgetApi;
     private final CachedPriceDao cacheDao;
     private final AppExecutors exec;
 
@@ -35,7 +37,7 @@ public class CryptoRepository {
 
     public CryptoRepository(Context ctx) {
         api = RetrofitClient.getCoinGeckoService();
-        mexcApi = RetrofitClient.getMexcService();
+        bitgetApi = RetrofitClient.getBitgetService();
         cacheDao = FrxDatabase.getInstance(ctx).cachedPriceDao();
         exec = AppExecutors.getInstance();
     }
@@ -127,29 +129,30 @@ public class CryptoRepository {
         });
     }
 
-    public void fetchMexcKlines(String symbol, int seconds, int limit, OhlcCallback callback) {
-        String interval = CoinSymbolMapper.toMexcInterval(seconds);
-        mexcApi.getKlines(symbol, interval, limit)
-            .enqueue(new Callback<List<List<Object>>>() {
+    public void fetchBitgetKlines(String symbol, int seconds, int limit, OhlcCallback callback) {
+        String gran = CoinSymbolMapper.toBitgetGranularity(seconds);
+        bitgetApi.getCandles(symbol, gran, limit)
+            .enqueue(new Callback<JsonObject>() {
                 @Override
-                public void onResponse(Call<List<List<Object>>> c, Response<List<List<Object>>> r) {
-                    if (r.isSuccessful() && r.body() != null) {
-                        callback.onResult(parseMexcKlines(r.body()));
+                public void onResponse(Call<JsonObject> c, Response<JsonObject> r) {
+                    if (r.isSuccessful() && r.body() != null && r.body().has("data")) {
+                        callback.onResult(parseBitgetKlines(r.body().getAsJsonArray("data")));
                     }
                 }
-                @Override public void onFailure(Call<List<List<Object>>> c, Throwable t) {}
+                @Override public void onFailure(Call<JsonObject> c, Throwable t) {}
             });
     }
 
-    private List<List<Double>> parseMexcKlines(List<List<Object>> body) {
+    private List<List<Double>> parseBitgetKlines(JsonArray data) {
         List<List<Double>> result = new ArrayList<>();
-        for (List<Object> k : body) {
+        for (int i = 0; i < data.size(); i++) {
             try {
-                double time  = ((Number) k.get(0)).doubleValue();
-                double open  = Double.parseDouble(k.get(1).toString());
-                double high  = Double.parseDouble(k.get(2).toString());
-                double low   = Double.parseDouble(k.get(3).toString());
-                double close = Double.parseDouble(k.get(4).toString());
+                JsonArray k = data.get(i).getAsJsonArray();
+                double time  = Double.parseDouble(k.get(0).getAsString());
+                double open  = Double.parseDouble(k.get(1).getAsString());
+                double high  = Double.parseDouble(k.get(2).getAsString());
+                double low   = Double.parseDouble(k.get(3).getAsString());
+                double close = Double.parseDouble(k.get(4).getAsString());
                 result.add(Arrays.asList(time, open, high, low, close));
             } catch (Exception e) {}
         }

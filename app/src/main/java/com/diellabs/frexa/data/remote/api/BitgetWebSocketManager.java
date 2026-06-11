@@ -2,13 +2,14 @@ package com.diellabs.frexa.data.remote.api;
 
 import android.util.Log;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import okhttp3.*;
-import okio.ByteString;
+import java.util.concurrent.TimeUnit;
 
-public class MexcWebSocketManager {
-    private static final String TAG = "MexcWS";
-    private static final String WS_URL = "wss://wspush.mexc.com/ws";
+public class BitgetWebSocketManager {
+    private static final String TAG = "BitgetWS";
+    private static final String WS_URL = "wss://ws.bitget.com/v2/ws/public";
 
     private final OkHttpClient httpClient;
     private final Gson gson = new Gson();
@@ -22,7 +23,7 @@ public class MexcWebSocketManager {
         void onError(String message);
     }
 
-    public MexcWebSocketManager(OkHttpClient httpClient) {
+    public BitgetWebSocketManager(OkHttpClient httpClient) {
         this.httpClient = httpClient;
     }
 
@@ -40,23 +41,26 @@ public class MexcWebSocketManager {
             public void onOpen(WebSocket ws, Response response) {
                 connected = true;
                 subscribe(symbol);
-                Log.d(TAG, "Connected & Subscribed: " + symbol);
+                Log.d(TAG, "Connected: " + symbol);
+                startHeartbeat(ws);
             }
 
             @Override
             public void onMessage(WebSocket ws, String text) {
+                if (text.equals("pong")) return;
                 try {
                     JsonObject json = gson.fromJson(text, JsonObject.class);
-                    if (json.has("c") && json.get("c").getAsString().contains("deals")) {
-                        JsonObject data = json.getAsJsonObject("d");
-                        if (data != null && data.has("p")) {
-                            double price = data.get("p").getAsDouble();
-                            if (listener != null) listener.onPrice(activeSymbol, price);
+                    if (json.has("data")) {
+                        JsonArray dataArray = json.getAsJsonArray("data");
+                        if (dataArray.size() > 0) {
+                            JsonObject data = dataArray.get(0).getAsJsonObject();
+                            if (data.has("lastPr")) {
+                                double price = data.get("lastPr").getAsDouble();
+                                if (listener != null) listener.onPrice(activeSymbol, price);
+                            }
                         }
                     }
-                } catch (Exception e) {
-                    // Log.e(TAG, "Parse error: " + e.getMessage());
-                }
+                } catch (Exception e) {}
             }
 
             @Override
@@ -65,25 +69,30 @@ public class MexcWebSocketManager {
                 Log.e(TAG, "Failure: " + t.getMessage());
                 if (listener != null) listener.onError(t.getMessage());
             }
-
-            @Override
-            public void onClosed(WebSocket ws, int code, String reason) {
-                connected = false;
-                Log.d(TAG, "Closed: " + reason);
-            }
         });
     }
 
     private void subscribe(String symbol) {
         if (webSocket == null) return;
-        String sub = "{\"method\":\"SUBSCRIPTION\",\"params\":[\"spot@public.deals.v3.api@" + symbol + "\"]}";
+        String sub = "{\"op\":\"subscribe\",\"args\":[{\"instType\":\"SPOT\",\"channel\":\"ticker\",\"instId\":\"" + symbol + "\"}]}";
         webSocket.send(sub);
+    }
+
+    private void startHeartbeat(WebSocket ws) {
+        new Thread(() -> {
+            while (connected) {
+                try {
+                    Thread.sleep(25000);
+                    if (connected) ws.send("ping");
+                } catch (InterruptedException e) { break; }
+            }
+        }).start();
     }
 
     public void switchSymbol(String symbol) {
         if (symbol.equals(activeSymbol) && connected) return;
         if (webSocket != null && connected) {
-            String unsub = "{\"method\":\"UNSUBSCRIPTION\",\"params\":[\"spot@public.deals.v3.api@" + activeSymbol + "\"]}";
+            String unsub = "{\"op\":\"unsubscribe\",\"args\":[{\"instType\":\"SPOT\",\"channel\":\"ticker\",\"instId\":\"" + activeSymbol + "\"}]}";
             webSocket.send(unsub);
         }
         activeSymbol = symbol;

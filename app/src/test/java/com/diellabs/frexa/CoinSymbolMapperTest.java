@@ -7,25 +7,25 @@ import static org.junit.Assert.*;
 public class CoinSymbolMapperTest {
 
     @Test
-    public void toMexcSymbol_knownCoin_returnsSymbol() {
-        assertEquals("BTCUSDT",  CoinSymbolMapper.toMexcSymbol("bitcoin"));
-        assertEquals("ETHUSDT",  CoinSymbolMapper.toMexcSymbol("ethereum"));
-        assertEquals("BNBUSDT",  CoinSymbolMapper.toMexcSymbol("binancecoin"));
-        assertEquals("SOLUSDT",  CoinSymbolMapper.toMexcSymbol("solana"));
+    public void toBitgetSymbol_knownCoin_returnsSymbol() {
+        assertEquals("BTCUSDT",  CoinSymbolMapper.toBitgetSymbol("bitcoin"));
+        assertEquals("ETHUSDT",  CoinSymbolMapper.toBitgetSymbol("ethereum"));
+        assertEquals("BNBUSDT",  CoinSymbolMapper.toBitgetSymbol("binancecoin"));
+        assertEquals("SOLUSDT",  CoinSymbolMapper.toBitgetSymbol("solana"));
     }
 
     @Test
-    public void toMexcSymbol_unknownCoin_returnsFallback() {
-        assertEquals("NEWCOINUSDT", CoinSymbolMapper.toMexcSymbol("new-coin"));
+    public void toBitgetSymbol_unknownCoin_returnsFallback() {
+        assertEquals("NEWCOINUSDT", CoinSymbolMapper.toBitgetSymbol("new-coin"));
     }
 
     @Test
-    public void toMexcInterval_returnsCorrectInterval() {
-        assertEquals("1m",  CoinSymbolMapper.toMexcInterval(60));
-        assertEquals("5m",  CoinSymbolMapper.toMexcInterval(300));
-        assertEquals("15m", CoinSymbolMapper.toMexcInterval(900));
-        assertEquals("1h",  CoinSymbolMapper.toMexcInterval(3600));
-        assertEquals("4h",  CoinSymbolMapper.toMexcInterval(14400));
-        assertEquals("1d",  CoinSymbolMapper.toMexcInterval(86400));
+    public void toBitgetGranularity_returnsCorrectGranularity() {
+        assertEquals("1min",  CoinSymbolMapper.toBitgetGranularity(60));
+        assertEquals("5min",  CoinSymbolMapper.toBitgetGranularity(300));
+        assertEquals("15min", CoinSymbolMapper.toBitgetGranularity(900));
+        assertEquals("1h",    CoinSymbolMapper.toBitgetGranularity(3600));
+        assertEquals("4h",    CoinSymbolMapper.toBitgetGranularity(14400));
+        assertEquals("1day",  CoinSymbolMapper.toBitgetGranularity(86400));
     }
 }
