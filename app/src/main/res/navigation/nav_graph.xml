@@ -18,6 +18,7 @@
         <action android:id="@+id/action_home_to_asset_detail" app:destination="@id/assetDetailFragment" />
     </fragment>
 
+    <fragment android:id="@+id/marketFragment" android:name="com.diellabs.frexa.ui.market.MarketFragment" />
     <fragment android:id="@+id/terminalFragment"
         android:name="com.diellabs.frexa.ui.terminal.TerminalFragment" />
     <fragment android:id="@+id/transaksiFragment"

@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private NavController navController;
     private static final List<Integer> BOTTOM_NAV_IDS = Arrays.asList(
-        R.id.homeFragment, R.id.transaksiFragment,
+        R.id.homeFragment, R.id.marketFragment, R.id.transaksiFragment,
         R.id.terminalFragment, R.id.bantuanFragment
     );
 
