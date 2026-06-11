@@ -89,6 +89,11 @@ public class LiveCandleBuilderTest {
 
     @Test
     public void reset_clearsLiveState() {
+        // Prime with historical data so reset() must also clear it
+        List<List<Double>> hist = new ArrayList<>();
+        hist.add(Arrays.asList(0.0, 100.0, 110.0, 90.0, 105.0));
+        builder.setHistoricalCandles(hist);
+
         builder.addTick(100.0, 60_000L);
         builder.reset(300);
 

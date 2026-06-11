@@ -32,6 +32,7 @@ public class LiveCandleBuilder {
             periodStart = ps;
             currentCandle = Arrays.asList((double) periodStart, price, price, price, price);
         } else if (timestampMs >= periodStart + periodMs) {
+            // If multiple periods elapsed, intermediate gaps are not filled — caller accepts this
             liveCandles.add(new ArrayList<>(currentCandle));
             periodStart = ps;
             currentCandle = Arrays.asList((double) periodStart, price, price, price, price);
@@ -58,8 +59,10 @@ public class LiveCandleBuilder {
         return result;
     }
 
+    // Clears all state (historical + live) and sets a new period. Call setHistoricalCandles() after reset if needed.
     public synchronized void reset(int newPeriodSeconds) {
         periodSeconds = newPeriodSeconds;
+        historicalCandles.clear();
         liveCandles.clear();
         currentCandle = null;
         periodStart = 0;
