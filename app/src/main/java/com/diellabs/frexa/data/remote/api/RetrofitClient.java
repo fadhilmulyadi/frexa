@@ -10,17 +10,20 @@ public class RetrofitClient {
     private static final String COINGECKO = "https://api.coingecko.com/api/v3/";
     private static final String GEMINI    = "https://generativelanguage.googleapis.com/";
     private static final String BITGET    = "https://api.bitget.com/";
+    // Cloudflare Worker Proxy for Bitfinex
+    private static final String PROXY_BASE = "https://frexa-api-gateaway.dielnzee.workers.dev/";
 
     private static CoinGeckoService coinGecko;
     private static GeminiService    gemini;
     private static BitgetService    bitget;
+    private static BitfinexService  bitfinex;
 
     private static OkHttpClient client() {
         HttpLoggingInterceptor log = new HttpLoggingInterceptor();
         log.setLevel(HttpLoggingInterceptor.Level.BASIC);
         return new OkHttpClient.Builder().addInterceptor(log)
-                .connectTimeout(15, TimeUnit.SECONDS)
-                .readTimeout(15, TimeUnit.SECONDS)
+                .connectTimeout(20, TimeUnit.SECONDS)
+                .readTimeout(20, TimeUnit.SECONDS)
                 .build();
     }
 
@@ -46,5 +49,13 @@ public class RetrofitClient {
                 .addConverterFactory(GsonConverterFactory.create()).build()
                 .create(BitgetService.class);
         return bitget;
+    }
+
+    public static BitfinexService getBitfinexService() {
+        if (bitfinex == null) bitfinex = new Retrofit.Builder()
+                .baseUrl(PROXY_BASE).client(client())
+                .addConverterFactory(GsonConverterFactory.create()).build()
+                .create(BitfinexService.class);
+        return bitfinex;
     }
 }
