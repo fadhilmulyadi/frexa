@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.diellabs.frexa.data.local.dao.CachedPriceDao;
 import com.diellabs.frexa.data.local.db.FrxDatabase;
 import com.diellabs.frexa.data.local.entity.CachedPriceEntity;
-import com.diellabs.frexa.data.remote.api.BitgetService;
+import com.diellabs.frexa.data.remote.api.BitfinexService;
 import com.diellabs.frexa.data.remote.api.CoinGeckoService;
 import com.diellabs.frexa.data.remote.api.CoinSymbolMapper;
 import com.diellabs.frexa.data.remote.api.RetrofitClient;
@@ -20,7 +20,7 @@ import retrofit2.Response;
 
 public class CryptoRepository {
     private final CoinGeckoService api;
-    private final BitgetService bitgetApi;
+    private final BitfinexService bitfinexApi;
     private final CachedPriceDao cacheDao;
     private final AppExecutors exec;
 
@@ -37,7 +37,7 @@ public class CryptoRepository {
 
     public CryptoRepository(Context ctx) {
         api = RetrofitClient.getCoinGeckoService();
-        bitgetApi = RetrofitClient.getBitgetService();
+        bitfinexApi = RetrofitClient.getBitfinexService();
         cacheDao = FrxDatabase.getInstance(ctx).cachedPriceDao();
         exec = AppExecutors.getInstance();
     }
@@ -129,32 +129,38 @@ public class CryptoRepository {
         });
     }
 
-    public void fetchBitgetKlines(String symbol, int seconds, int limit, OhlcCallback callback) {
-        String gran = CoinSymbolMapper.toBitgetGranularity(seconds);
-        bitgetApi.getCandles(symbol, gran, limit)
-            .enqueue(new Callback<JsonObject>() {
+    public void fetchBitfinexKlines(String symbol, int seconds, int limit, OhlcCallback callback) {
+        String tf = CoinSymbolMapper.toBitfinexTimeframe(seconds);
+        bitfinexApi.getCandles(tf, symbol, limit)
+            .enqueue(new Callback<List<List<Double>>>() {
                 @Override
-                public void onResponse(Call<JsonObject> c, Response<JsonObject> r) {
-                    if (r.isSuccessful() && r.body() != null && r.body().has("data")) {
-                        callback.onResult(parseBitgetKlines(r.body().getAsJsonArray("data")));
+                public void onResponse(Call<List<List<Double>>> c, Response<List<List<Double>>> r) {
+                    if (r.isSuccessful() && r.body() != null) {
+                        callback.onResult(parseBitfinexKlines(r.body()));
                     }
                 }
-                @Override public void onFailure(Call<JsonObject> c, Throwable t) {}
+                @Override public void onFailure(Call<List<List<Double>>> c, Throwable t) {}
             });
     }
 
-    private List<List<Double>> parseBitgetKlines(JsonArray data) {
+    /**
+     * Bitfinex format: [MTS, OPEN, CLOSE, HIGH, LOW, VOLUME]
+     * Chart format: [Timestamp, Open, High, Low, Close]
+     */
+    private List<List<Double>> parseBitfinexKlines(List<List<Double>> body) {
         List<List<Double>> result = new ArrayList<>();
-        for (int i = 0; i < data.size(); i++) {
-            try {
-                JsonArray k = data.get(i).getAsJsonArray();
-                double time  = Double.parseDouble(k.get(0).getAsString());
-                double open  = Double.parseDouble(k.get(1).getAsString());
-                double high  = Double.parseDouble(k.get(2).getAsString());
-                double low   = Double.parseDouble(k.get(3).getAsString());
-                double close = Double.parseDouble(k.get(4).getAsString());
-                result.add(Arrays.asList(time, open, high, low, close));
-            } catch (Exception e) {}
+        // Bitfinex returns newest first, we need oldest first for Chart
+        Collections.reverse(body);
+        for (List<Double> k : body) {
+            if (k.size() >= 5) {
+                result.add(Arrays.asList(
+                    k.get(0), // MTS
+                    k.get(1), // Open
+                    k.get(3), // High
+                    k.get(4), // Low
+                    k.get(2)  // Close
+                ));
+            }
         }
         return result;
     }
