@@ -20,6 +20,9 @@ public class TerminalFragment extends Fragment {
     private TradingViewModel tradingVm;
     private UserPrefs prefs;
     private double stakeAmount = 10.0;
+    private final int[] DURATIONS = {60, 300, 900, 1800, 3600};
+    private final String[] DURATION_LABELS = {"1 mnt", "5 mnt", "15 mnt", "30 mnt", "1 jam"};
+    private int durationIndex = 0;
     private int durationSeconds = 60;
     private String durationLabel = "1 mnt";
     private int profitPercent = 85;
@@ -54,8 +57,25 @@ public class TerminalFragment extends Fragment {
             sheet.setCallback((sec, label) -> {
                 durationSeconds = sec; durationLabel = label;
                 b.tvDuration.setText(label);
+                // Update index for stepper sync
+                for(int i=0; i<DURATIONS.length; i++) {
+                    if(DURATIONS[i] == sec) { durationIndex = i; break; }
+                }
             });
             sheet.show(getChildFragmentManager(), "duration");
+        });
+
+        b.btnDurationMinus.setOnClickListener(x -> {
+            if (durationIndex > 0) {
+                durationIndex--;
+                updateDurationUI();
+            }
+        });
+        b.btnDurationPlus.setOnClickListener(x -> {
+            if (durationIndex < DURATIONS.length - 1) {
+                durationIndex++;
+                updateDurationUI();
+            }
         });
 
         b.btnWallet.setOnClickListener(x ->
@@ -85,6 +105,12 @@ public class TerminalFragment extends Fragment {
 
         b.btnUp.setOnClickListener(x -> placeTrade("UP"));
         b.btnDown.setOnClickListener(x -> placeTrade("DOWN"));
+    }
+
+    private void updateDurationUI() {
+        durationSeconds = DURATIONS[durationIndex];
+        durationLabel = DURATION_LABELS[durationIndex];
+        b.tvDuration.setText(durationLabel);
     }
 
     private void placeTrade(String direction) {

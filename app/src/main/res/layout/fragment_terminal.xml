@@ -23,7 +23,7 @@
             <ImageView
                 android:id="@+id/iv_avatar"
                 android:layout_width="match_parent"
-                android:layout_height="parent"
+                android:layout_height="match_parent"
                 android:src="@drawable/ic_person"
                 android:contentDescription="Avatar"
                 app:tint="@color/frx_text_2" />
