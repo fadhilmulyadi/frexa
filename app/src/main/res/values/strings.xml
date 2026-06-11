@@ -11,4 +11,16 @@
     <string name="label_down">TURUN</string>
     <string name="label_balance">Saldo Virtual</string>
     <string name="soon">Segera Hadir</string>
+
+    <!-- Deposit Strings -->
+    <string name="title_deposit">Deposit</string>
+    <string name="label_account_info">IDR Akun Anda No.121105</string>
+    <string name="label_payment_method">Metode Pembayaran</string>
+    <string name="method_bca_va">Virtual Account BCA</string>
+    <string name="label_nominal_deposit">Nominal Deposit</string>
+    <string name="hint_min_deposit">Min. $10</string>
+    <string name="title_scan_qr">Scan QR</string>
+    <string name="label_payment_timer">Selesaikan pembayaran dalam 15:00</string>
+    <string name="btn_back">Kembali</string>
+    <string name="btn_next">Selanjutnya</string>
 </resources>

@@ -45,6 +45,29 @@ public class LiveCandleBuilder {
         }
     }
 
+    public synchronized void updateLiveCandle(double open, double high, double low, double close,
+                                              long timestampMs, boolean closed) {
+        long periodMs = (long) periodSeconds * 1000L;
+        long ps = (timestampMs / periodMs) * periodMs;
+
+        if (closed) {
+            if (currentCandle != null && periodStart == ps) {
+                currentCandle = Arrays.asList((double) ps, open, high, low, close);
+                liveCandles.add(new ArrayList<>(currentCandle));
+                currentCandle = null;
+                periodStart = 0;
+            } else {
+                liveCandles.add(Arrays.asList((double) ps, open, high, low, close));
+            }
+        } else {
+            if (currentCandle != null && periodStart != ps && periodStart != 0) {
+                liveCandles.add(new ArrayList<>(currentCandle));
+            }
+            periodStart = ps;
+            currentCandle = Arrays.asList((double) ps, open, high, low, close);
+        }
+    }
+
     public synchronized List<List<Double>> getCandles() {
         List<List<Double>> all = new ArrayList<>();
         all.addAll(historicalCandles);

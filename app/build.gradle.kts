@@ -2,6 +2,13 @@ plugins {
     alias(libs.plugins.android.application)
 }
 
+// Konfigurasi Java Toolchain di tingkat proyek agar Gradle menggunakan JDK yang lengkap
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
+}
+
 android {
     namespace = "com.diellabs.frexa"
     compileSdk = 36
