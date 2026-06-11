@@ -1,6 +1,6 @@
 # CryptoCompare + CoinCap Real-Time Chart Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Ganti Binance API (diblokir di Indonesia) dengan CryptoCompare REST (historical OHLCV) + CoinCap WebSocket (live price ticks) agar chart real-time berfungsi dari Indonesia.
 
@@ -32,7 +32,7 @@
 **Files:**
 - Create: `app/src/main/java/com/diellabs/frexa/data/remote/model/CryptoCompareHistominute.java`
 
-- [ ] **Step 1: Buat file model**
+- [x] **Step 1: Buat file model**
 
 ```java
 package com.diellabs.frexa.data.remote.model;
@@ -63,7 +63,7 @@ public class CryptoCompareHistominute {
 }
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```
 git add app/src/main/java/com/diellabs/frexa/data/remote/model/CryptoCompareHistominute.java
@@ -77,7 +77,7 @@ git commit -m "feat(model): add CryptoCompareHistominute OHLCV model"
 **Files:**
 - Create: `app/src/main/java/com/diellabs/frexa/data/remote/api/CryptoCompareService.java`
 
-- [ ] **Step 1: Buat file Retrofit interface**
+- [x] **Step 1: Buat file Retrofit interface**
 
 ```java
 package com.diellabs.frexa.data.remote.api;
@@ -106,7 +106,7 @@ public interface CryptoCompareService {
 }
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```
 git add app/src/main/java/com/diellabs/frexa/data/remote/api/CryptoCompareService.java
@@ -120,7 +120,7 @@ git commit -m "feat(api): add CryptoCompareService Retrofit interface"
 **Files:**
 - Create: `app/src/main/java/com/diellabs/frexa/data/remote/api/CoinCapWebSocketManager.java`
 
-- [ ] **Step 1: Buat file WebSocket manager**
+- [x] **Step 1: Buat file WebSocket manager**
 
 ```java
 package com.diellabs.frexa.data.remote.api;
@@ -222,7 +222,7 @@ public class CoinCapWebSocketManager {
 }
 ```
 
-- [ ] **Step 2: Verifikasi build**
+- [x] **Step 2: Verifikasi build**
 
 ```
 ./gradlew assembleDebug
@@ -230,7 +230,7 @@ public class CoinCapWebSocketManager {
 
 Expected: `BUILD SUCCESSFUL`
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```
 git add app/src/main/java/com/diellabs/frexa/data/remote/api/CoinCapWebSocketManager.java
@@ -244,7 +244,7 @@ git commit -m "feat(websocket): add CoinCapWebSocketManager for live price ticks
 **Files:**
 - Modify: `app/src/main/java/com/diellabs/frexa/data/remote/api/RetrofitClient.java`
 
-- [ ] **Step 1: Ganti seluruh isi RetrofitClient.java**
+- [x] **Step 1: Ganti seluruh isi RetrofitClient.java**
 
 ```java
 package com.diellabs.frexa.data.remote.api;
@@ -299,7 +299,7 @@ public class RetrofitClient {
 }
 ```
 
-- [ ] **Step 2: Verifikasi build**
+- [x] **Step 2: Verifikasi build**
 
 ```
 ./gradlew assembleDebug
@@ -307,7 +307,7 @@ public class RetrofitClient {
 
 Expected: `BUILD SUCCESSFUL`
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```
 git add app/src/main/java/com/diellabs/frexa/data/remote/api/RetrofitClient.java
@@ -322,7 +322,7 @@ git commit -m "feat(retrofit): replace Binance client with CryptoCompare client"
 - Modify: `app/src/main/java/com/diellabs/frexa/data/remote/api/CoinSymbolMapper.java`
 - Test: `app/src/test/java/com/diellabs/frexa/CoinSymbolMapperTest.java`
 
-- [ ] **Step 1: Tulis test terlebih dulu**
+- [x] **Step 1: Tulis test terlebih dulu**
 
 Cek apakah file test sudah ada di `app/src/test/java/com/diellabs/frexa/`. Jika ada `CoinSymbolMapperTest.java`, hapus atau replace seluruh isinya. Jika belum ada, buat file baru.
 
@@ -367,7 +367,7 @@ public class CoinSymbolMapperTest {
 }
 ```
 
-- [ ] **Step 2: Jalankan test — harus FAIL**
+- [x] **Step 2: Jalankan test — harus FAIL**
 
 ```
 ./gradlew testDebugUnitTest --tests "com.diellabs.frexa.CoinSymbolMapperTest"
@@ -375,7 +375,7 @@ public class CoinSymbolMapperTest {
 
 Expected: FAIL (method tidak ada di CoinSymbolMapper)
 
-- [ ] **Step 3: Ganti seluruh isi CoinSymbolMapper.java**
+- [x] **Step 3: Ganti seluruh isi CoinSymbolMapper.java**
 
 ```java
 package com.diellabs.frexa.data.remote.api;
@@ -461,7 +461,7 @@ public final class CoinSymbolMapper {
 }
 ```
 
-- [ ] **Step 4: Jalankan test — harus PASS**
+- [x] **Step 4: Jalankan test — harus PASS**
 
 ```
 ./gradlew testDebugUnitTest --tests "com.diellabs.frexa.CoinSymbolMapperTest"
@@ -469,7 +469,7 @@ public final class CoinSymbolMapper {
 
 Expected: `BUILD SUCCESSFUL`, semua test PASS
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```
 git add app/src/main/java/com/diellabs/frexa/data/remote/api/CoinSymbolMapper.java
@@ -484,7 +484,7 @@ git commit -m "feat(mapper): replace Binance symbol mapper with CryptoCompare fs
 **Files:**
 - Modify: `app/src/main/java/com/diellabs/frexa/data/repository/CryptoRepository.java`
 
-- [ ] **Step 1: Edit CryptoRepository.java**
+- [x] **Step 1: Edit CryptoRepository.java**
 
 **Perubahan di constructor:** Ganti `binanceApi` → `cryptoCompareApi`
 
@@ -569,7 +569,7 @@ Hapus import yang tidak lagi dibutuhkan:
 import com.diellabs.frexa.data.remote.api.BinanceService;
 ```
 
-- [ ] **Step 2: Verifikasi build**
+- [x] **Step 2: Verifikasi build**
 
 ```
 ./gradlew assembleDebug
@@ -577,7 +577,7 @@ import com.diellabs.frexa.data.remote.api.BinanceService;
 
 Expected: `BUILD SUCCESSFUL`
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```
 git add app/src/main/java/com/diellabs/frexa/data/repository/CryptoRepository.java
@@ -591,7 +591,7 @@ git commit -m "feat(repo): replace fetchBinanceKlines with fetchCryptoCompareKli
 **Files:**
 - Modify: `app/src/main/java/com/diellabs/frexa/viewmodel/CryptoViewModel.java`
 
-- [ ] **Step 1: Ganti seluruh isi CryptoViewModel.java**
+- [x] **Step 1: Ganti seluruh isi CryptoViewModel.java**
 
 ```java
 package com.diellabs.frexa.viewmodel;
@@ -694,7 +694,7 @@ public class CryptoViewModel extends AndroidViewModel {
 }
 ```
 
-- [ ] **Step 2: Verifikasi build**
+- [x] **Step 2: Verifikasi build**
 
 ```
 ./gradlew assembleDebug
@@ -702,7 +702,7 @@ public class CryptoViewModel extends AndroidViewModel {
 
 Expected: `BUILD SUCCESSFUL`
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```
 git add app/src/main/java/com/diellabs/frexa/viewmodel/CryptoViewModel.java
@@ -718,7 +718,7 @@ git commit -m "feat(viewmodel): wire CoinCap WebSocket + CryptoCompare klines, r
 - Delete: `app/src/main/java/com/diellabs/frexa/data/remote/api/BinanceWebSocketManager.java`
 - Delete: `app/src/main/java/com/diellabs/frexa/data/remote/model/BinanceKlineEvent.java`
 
-- [ ] **Step 1: Hapus ketiga file**
+- [x] **Step 1: Hapus ketiga file**
 
 ```
 git rm app/src/main/java/com/diellabs/frexa/data/remote/api/BinanceService.java
@@ -726,7 +726,7 @@ git rm app/src/main/java/com/diellabs/frexa/data/remote/api/BinanceWebSocketMana
 git rm app/src/main/java/com/diellabs/frexa/data/remote/model/BinanceKlineEvent.java
 ```
 
-- [ ] **Step 2: Verifikasi build setelah penghapusan**
+- [x] **Step 2: Verifikasi build setelah penghapusan**
 
 ```
 ./gradlew assembleDebug
@@ -742,7 +742,7 @@ grep -r "Binance" app/src/main/java --include="*.java"
 
 Hapus atau update setiap referensi yang ditemukan.
 
-- [ ] **Step 3: Jalankan semua unit tests**
+- [x] **Step 3: Jalankan semua unit tests**
 
 ```
 ./gradlew testDebugUnitTest
@@ -750,7 +750,7 @@ Hapus atau update setiap referensi yang ditemukan.
 
 Expected: `BUILD SUCCESSFUL`, semua test PASS (termasuk `LiveCandleBuilderTest` 7 tests dan `CoinSymbolMapperTest` 4 tests)
 
-- [ ] **Step 4: Commit final**
+- [x] **Step 4: Commit final**
 
 ```
 git commit -m "chore: remove Binance API files, replaced by CryptoCompare + CoinCap"
