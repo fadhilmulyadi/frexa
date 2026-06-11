@@ -1,5 +1,6 @@
 <resources>
     <style name="Theme.Frexa" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="android:fontFamily">@font/plus_jakarta_sans</item>
         <item name="colorPrimary">@color/frx_green</item>
         <item name="colorOnPrimary">@color/frx_bg</item>
         <item name="colorSurface">@color/frx_surface</item>
