@@ -126,26 +126,26 @@
                     app:singleSelection="true">
 
                     <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_fixed_time"
+                        android:id="@+id/chip_trending"
                         style="@style/Widget.Material3.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Fixed Time"
+                        android:text="Trending"
                         android:checked="true" />
 
                     <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_forex"
+                        android:id="@+id/chip_gainers"
                         style="@style/Widget.Material3.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Forex" />
+                        android:text="Gainers" />
 
                     <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_stocks"
+                        android:id="@+id/chip_losers"
                         style="@style/Widget.Material3.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Stocks" />
+                        android:text="Losers" />
                 </com.google.android.material.chip.ChipGroup>
             </HorizontalScrollView>
 

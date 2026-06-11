@@ -64,8 +64,8 @@ public class HomeFragment extends Fragment {
             if (!checkedIds.isEmpty()) {
                 int checkedId = checkedIds.get(0);
                 int index = 0;
-                if (checkedId == R.id.chip_forex) index = 1;
-                else if (checkedId == R.id.chip_stocks) index = 2;
+                if (checkedId == R.id.chip_gainers) index = 1;
+                else if (checkedId == R.id.chip_losers) index = 2;
                 filterCoins(index);
             }
         });
@@ -78,8 +78,8 @@ public class HomeFragment extends Fragment {
             moverAdapter.setData(movers);
             
             int index = 0;
-            if (b.chipGroupAssets.getCheckedChipId() == R.id.chip_forex) index = 1;
-            else if (b.chipGroupAssets.getCheckedChipId() == R.id.chip_stocks) index = 2;
+            if (b.chipGroupAssets.getCheckedChipId() == R.id.chip_gainers) index = 1;
+            else if (b.chipGroupAssets.getCheckedChipId() == R.id.chip_losers) index = 2;
             filterCoins(index);
             
             b.tvOfflineBanner.setVisibility(View.GONE);
