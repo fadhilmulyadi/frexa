@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/frx_background">
+    android:background="@color/frx_bg">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -12,7 +12,7 @@
         
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:text="Notifikasi" android:textStyle="bold" android:textSize="24sp"
-            android:textColor="@color/frx_text_1" />
+            android:textColor="@color/frx_text" />
 
         <ImageView
             android:id="@+id/btn_settings"

@@ -21,11 +21,11 @@
             android:orientation="vertical">
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:text="Deposit Saldo" android:textStyle="bold" android:textSize="20sp"
-                android:textColor="@color/frx_text_1" android:layout_marginBottom="16dp" />
+                android:textColor="@color/frx_text" android:layout_marginBottom="16dp" />
             
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:text="Metode Pembayaran" android:textStyle="bold" android:textSize="14sp"
-                android:textColor="@color/frx_text_1" android:layout_marginBottom="8dp" />
+                android:textColor="@color/frx_text" android:layout_marginBottom="8dp" />
             
             <LinearLayout
                 android:layout_width="match_parent"
@@ -39,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Virtual Account BCA"
-                    android:textColor="@color/frx_text_1" />
+                    android:textColor="@color/frx_text" />
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
@@ -49,7 +49,7 @@
 
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:text="Nominal Deposit" android:textStyle="bold" android:textSize="14sp"
-                android:textColor="@color/frx_text_1" android:layout_marginBottom="8dp" />
+                android:textColor="@color/frx_text" android:layout_marginBottom="8dp" />
 
             <EditText
                 android:layout_width="match_parent"
@@ -58,12 +58,12 @@
                 android:paddingHorizontal="16dp"
                 android:hint="Min. $10"
                 android:inputType="number"
-                android:textColor="@color/frx_text_1"
+                android:textColor="@color/frx_text"
                 android:layout_marginBottom="16dp" />
             
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Promo & Voucher" android:textStyle="bold" android:textSize="14sp"
-                android:textColor="@color/frx_text_1" android:layout_marginBottom="8dp" />
+                android:text="Promo &amp; Voucher" android:textStyle="bold" android:textSize="14sp"
+                android:textColor="@color/frx_text" android:layout_marginBottom="8dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -92,6 +92,12 @@
             <!-- Content for nominal picker -->
         </LinearLayout>
 
+        <LinearLayout android:id="@+id/vg_confirm"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical" android:visibility="gone">
+            <!-- Content for confirmation step -->
+        </LinearLayout>
+
         <LinearLayout android:id="@+id/vg_qr"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="vertical" android:gravity="center" android:visibility="gone">
@@ -114,11 +120,20 @@
         android:orientation="horizontal" android:layout_marginTop="24dp">
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_back"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="wrap_content" android:layout_height="56dp"
+            android:text="Kembali" android:layout_marginEnd="8dp"
+            android:textColor="@color/frx_text"
+            android:visibility="gone"
+            app:strokeColor="@color/frx_text_2" />
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_close"
             style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="wrap_content" android:layout_height="56dp"
             android:text="Tutup" android:layout_marginEnd="8dp"
-            android:textColor="@color/frx_text_1"
+            android:textColor="@color/frx_text"
             app:strokeColor="@color/frx_text_2" />
 
         <com.google.android.material.button.MaterialButton
@@ -128,7 +143,7 @@
             android:backgroundTint="@android:color/transparent"
             android:background="@drawable/btn_cta_grad"
             app:backgroundTint="@null"
-            android:textColor="@color/white" />
+            android:textColor="#FFFFFF" />
 
     </LinearLayout>
 </LinearLayout>

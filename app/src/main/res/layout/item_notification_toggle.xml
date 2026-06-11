@@ -18,7 +18,7 @@
             android:text="Notifikasi Harga"
             android:textStyle="bold"
             android:textSize="16sp"
-            android:textColor="@color/frx_text_1" />
+            android:textColor="@color/frx_text" />
             
         <TextView
             android:layout_width="wrap_content"

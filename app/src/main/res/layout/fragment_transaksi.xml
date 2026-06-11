@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="@color/frx_background">
+    android:background="@color/frx_bg">
 
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
         android:orientation="vertical" android:paddingBottom="80dp">
@@ -11,7 +11,7 @@
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:text="Transaksi" android:textStyle="bold" android:textSize="22sp"
             android:layout_marginStart="16dp" android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp" android:textColor="@color/frx_text_1" />
+            android:layout_marginBottom="16dp" android:textColor="@color/frx_text" />
 
         <!-- Tab Row -->
         <LinearLayout
@@ -28,7 +28,7 @@
                 android:background="@drawable/bg_chip_active"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="8dp"
-                android:textColor="@color/white"
+                android:textColor="#FFFFFF"
                 android:textSize="14sp"
                 android:layout_marginEnd="8dp" />
 
@@ -79,7 +79,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="$1,240.50"
-                    android:textColor="@color/frx_text_1"
+                    android:textColor="@color/frx_text"
                     android:textStyle="bold"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -108,7 +108,7 @@
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:text="Posisi Terbuka" android:textStyle="bold" android:textSize="16sp"
             android:layout_marginStart="16dp" android:layout_marginBottom="8dp"
-            android:textColor="@color/frx_text_1" />
+            android:textColor="@color/frx_text" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_open_trades"
@@ -120,7 +120,7 @@
             android:text="Riwayat" android:textStyle="bold" android:textSize="16sp"
             android:layout_marginStart="16dp" android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp"
-            android:textColor="@color/frx_text_1" />
+            android:textColor="@color/frx_text" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_history"
