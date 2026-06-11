@@ -63,8 +63,10 @@ public class TerminalFragment extends Fragment {
 
         cryptoVm.livePrice.observe(getViewLifecycleOwner(), price -> {
             currentPrice = price;
-            b.tvBalance.setText(CurrencyFormatter.formatUsd(price));
         });
+
+        tradingVm.virtualBalance.observe(getViewLifecycleOwner(), bal ->
+            b.tvBalance.setText(CurrencyFormatter.formatBalance(bal)));
 
         cryptoVm.ohlcData.observe(getViewLifecycleOwner(), data -> b.chart.setOhlcData(data));
 
