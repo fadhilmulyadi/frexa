@@ -53,26 +53,26 @@ public class TerminalFragment extends Fragment {
             DurationBottomSheetFragment sheet = new DurationBottomSheetFragment();
             sheet.setCallback((sec, label) -> {
                 durationSeconds = sec; durationLabel = label;
-                b.btnDuration.setText(label);
+                b.tvDuration.setText(label);
             });
             sheet.show(getChildFragmentManager(), "duration");
         });
 
-        b.btnDeposit.setOnClickListener(x ->
+        b.btnWallet.setOnClickListener(x ->
             new DepositBottomSheetFragment().show(getChildFragmentManager(), "deposit"));
 
         cryptoVm.livePrice.observe(getViewLifecycleOwner(), price -> {
             currentPrice = price;
-            b.tvLivePrice.setText(CurrencyFormatter.formatUsd(price));
+            b.tvBalance.setText(CurrencyFormatter.formatUsd(price));
         });
 
         cryptoVm.ohlcData.observe(getViewLifecycleOwner(), data -> b.chart.setOhlcData(data));
 
         cryptoVm.coinList.observe(getViewLifecycleOwner(), coins -> {
             coins.stream().filter(c -> c.id.equals(coinId)).findFirst().ifPresent(c -> {
-                b.tvPair.setText(c.symbol.toUpperCase() + "/USD");
+                b.tvAccountName.setText(c.symbol.toUpperCase() + "/USD");
                 profitPercent = c.marketCapRank <= 10 ? 90 : c.marketCapRank <= 30 ? 80 : 75;
-                b.tvProfitPct.setText(profitPercent + "%");
+                b.tvProfitLabel.setText("Profit: " + profitPercent + "%");
             });
         });
 

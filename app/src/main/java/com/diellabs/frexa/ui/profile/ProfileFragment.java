@@ -34,10 +34,20 @@ public class ProfileFragment extends Fragment {
         prefs = new UserPrefs(requireContext());
 
         binding.tvUserName.setText(prefs.getUserName());
-        binding.tvUserId.setText(prefs.getUserEmail());
+        binding.tvUserId.setText("ID " + prefs.getUserEmail().hashCode()); // Mock ID
 
-        binding.btnBack.setOnClickListener(v ->
-                Navigation.findNavController(v).navigateUp());
+        binding.btnCopyId.setOnClickListener(v -> {
+            android.content.ClipboardManager clipboard = (android.content.ClipboardManager) 
+                requireContext().getSystemService(android.content.Context.CLIPBOARD_SERVICE);
+            android.content.ClipData clip = android.content.ClipData.newPlainText("User ID", binding.tvUserId.getText());
+            clipboard.setPrimaryClip(clip);
+            android.widget.Toast.makeText(requireContext(), "ID disalin", android.widget.Toast.LENGTH_SHORT).show();
+        });
+
+        binding.btnSettings.setOnClickListener(v -> {
+            // Placeholder for settings
+            android.widget.Toast.makeText(requireContext(), "Pengaturan", android.widget.Toast.LENGTH_SHORT).show();
+        });
 
         loadStats();
     }
@@ -49,10 +59,9 @@ public class ProfileFragment extends Fragment {
             int wins = repo.getWinCount();
             double best = repo.getBestProfit();
             requireActivity().runOnUiThread(() -> {
-                binding.tvStatTotal.setText(String.valueOf(total));
-                String wr = total > 0 ? (wins * 100 / total) + "%" : "0%";
-                binding.tvStatWinrate.setText(wr);
                 binding.tvStatBest.setText(CurrencyFormatter.formatUsd(best));
+                // Mocking profit for now or calculating if possible
+                binding.tvStatProfit.setText(CurrencyFormatter.formatUsd(best * 0.8)); 
             });
         });
     }

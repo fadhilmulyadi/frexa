@@ -60,13 +60,14 @@ public class HomeFragment extends Fragment {
         });
         b.rvAssets.setAdapter(coinAdapter);
 
-        b.tabAssets.addTab(b.tabAssets.newTab().setText("Top"));
-        b.tabAssets.addTab(b.tabAssets.newTab().setText("Gainers"));
-        b.tabAssets.addTab(b.tabAssets.newTab().setText("Losers"));
-        b.tabAssets.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override public void onTabSelected(TabLayout.Tab tab) { filterCoins(tab.getPosition()); }
-            @Override public void onTabUnselected(TabLayout.Tab tab) {}
-            @Override public void onTabReselected(TabLayout.Tab tab) {}
+        b.chipGroupAssets.setOnCheckedStateChangeListener((group, checkedIds) -> {
+            if (!checkedIds.isEmpty()) {
+                int checkedId = checkedIds.get(0);
+                int index = 0;
+                if (checkedId == R.id.chip_forex) index = 1;
+                else if (checkedId == R.id.chip_stocks) index = 2;
+                filterCoins(index);
+            }
         });
 
         cryptoVm.coinList.observe(getViewLifecycleOwner(), coins -> {
@@ -75,7 +76,12 @@ public class HomeFragment extends Fragment {
                     .sorted((a, c2) -> Double.compare(c2.priceChangePercentage24h, a.priceChangePercentage24h))
                     .limit(5).collect(Collectors.toList());
             moverAdapter.setData(movers);
-            filterCoins(b.tabAssets.getSelectedTabPosition());
+            
+            int index = 0;
+            if (b.chipGroupAssets.getCheckedChipId() == R.id.chip_forex) index = 1;
+            else if (b.chipGroupAssets.getCheckedChipId() == R.id.chip_stocks) index = 2;
+            filterCoins(index);
+            
             b.tvOfflineBanner.setVisibility(View.GONE);
             b.btnRefresh.setVisibility(View.GONE);
         });
