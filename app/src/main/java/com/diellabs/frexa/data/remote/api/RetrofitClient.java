@@ -7,16 +7,23 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import java.util.concurrent.TimeUnit;
 
 public class RetrofitClient {
-    private static final String COINGECKO = "https://api.coingecko.com/api/v3/";
-    private static final String GEMINI = "https://generativelanguage.googleapis.com/";
-    private static CoinGeckoService coinGecko;
-    private static GeminiService gemini;
+    private static final String COINGECKO     = "https://api.coingecko.com/api/v3/";
+    private static final String GEMINI        = "https://generativelanguage.googleapis.com/";
+    private static final String BINANCE       = "https://api.binance.com/";
+    private static final String CRYPTOCOMPARE = "https://min-api.cryptocompare.com/";
+
+    private static CoinGeckoService      coinGecko;
+    private static GeminiService         gemini;
+    private static BinanceService        binance;
+    private static CryptoCompareService  cryptoCompare;
 
     private static OkHttpClient client() {
         HttpLoggingInterceptor log = new HttpLoggingInterceptor();
         log.setLevel(HttpLoggingInterceptor.Level.BASIC);
         return new OkHttpClient.Builder().addInterceptor(log)
-                .connectTimeout(15, TimeUnit.SECONDS).readTimeout(15, TimeUnit.SECONDS).build();
+                .connectTimeout(15, TimeUnit.SECONDS)
+                .readTimeout(15, TimeUnit.SECONDS)
+                .build();
     }
 
     public static CoinGeckoService getCoinGeckoService() {
@@ -33,5 +40,21 @@ public class RetrofitClient {
                 .addConverterFactory(GsonConverterFactory.create()).build()
                 .create(GeminiService.class);
         return gemini;
+    }
+
+    public static BinanceService getBinanceService() {
+        if (binance == null) binance = new Retrofit.Builder()
+                .baseUrl(BINANCE).client(client())
+                .addConverterFactory(GsonConverterFactory.create()).build()
+                .create(BinanceService.class);
+        return binance;
+    }
+
+    public static CryptoCompareService getCryptoCompareService() {
+        if (cryptoCompare == null) cryptoCompare = new Retrofit.Builder()
+                .baseUrl(CRYPTOCOMPARE).client(client())
+                .addConverterFactory(GsonConverterFactory.create()).build()
+                .create(CryptoCompareService.class);
+        return cryptoCompare;
     }
 }
