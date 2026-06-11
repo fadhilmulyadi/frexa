@@ -4,7 +4,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
-import com.diellabs.frexa.data.remote.api.CoinCapWebSocketManager;
+import com.diellabs.frexa.data.remote.api.MexcWebSocketManager;
 import com.diellabs.frexa.data.remote.api.CoinSymbolMapper;
 import com.diellabs.frexa.data.remote.model.*;
 import com.diellabs.frexa.data.repository.CryptoRepository;
@@ -25,9 +25,9 @@ public class CryptoViewModel extends AndroidViewModel {
 
     private final CryptoRepository repo;
     private final LiveCandleBuilder candleBuilder = new LiveCandleBuilder(60);
-    private final CoinCapWebSocketManager coinCapWs;
+    private final MexcWebSocketManager mexcWs;
     private String activeCoinId = "bitcoin";
-    private String activeFsym = "BTC";
+    private String activeSymbol = "BTCUSDT";
 
     public CryptoViewModel(@NonNull Application app) {
         super(app);
@@ -38,10 +38,10 @@ public class CryptoViewModel extends AndroidViewModel {
                 .readTimeout(15, TimeUnit.SECONDS)
                 .build();
 
-        coinCapWs = new CoinCapWebSocketManager(wsClient);
-        coinCapWs.setListener(new CoinCapWebSocketManager.PriceListener() {
+        mexcWs = new MexcWebSocketManager(wsClient);
+        mexcWs.setListener(new MexcWebSocketManager.PriceListener() {
             @Override
-            public void onPrice(String assetId, double price) {
+            public void onPrice(String symbol, double price) {
                 candleBuilder.addTick(price, System.currentTimeMillis());
                 chartCandles.postValue(candleBuilder.getCandles());
                 livePrice.postValue(price);
@@ -58,16 +58,16 @@ public class CryptoViewModel extends AndroidViewModel {
 
     public void setActiveCoin(String id) {
         activeCoinId = id;
-        activeFsym = CoinSymbolMapper.toCryptoCompareFsym(id);
+        activeSymbol = CoinSymbolMapper.toMexcSymbol(id);
         int tf = selectedTimeframe.getValue() != null ? selectedTimeframe.getValue() : 60;
 
         candleBuilder.reset(tf);
 
-        repo.fetchCryptoCompareKlines(activeFsym, tf, 60, data -> {
+        repo.fetchMexcKlines(activeSymbol, tf, 60, data -> {
             ohlcData.postValue(data);
             candleBuilder.setHistoricalCandles(data);
             chartCandles.postValue(candleBuilder.getCandles());
-            coinCapWs.switchAsset(id);
+            mexcWs.switchSymbol(activeSymbol);
         });
     }
 
@@ -75,7 +75,7 @@ public class CryptoViewModel extends AndroidViewModel {
         selectedTimeframe.postValue(seconds);
         candleBuilder.reset(seconds);
 
-        repo.fetchCryptoCompareKlines(activeFsym, seconds, 60, data -> {
+        repo.fetchMexcKlines(activeSymbol, seconds, 60, data -> {
             ohlcData.postValue(data);
             candleBuilder.setHistoricalCandles(data);
             chartCandles.postValue(candleBuilder.getCandles());
@@ -85,14 +85,14 @@ public class CryptoViewModel extends AndroidViewModel {
     public void fetchMarketChart(String id) { repo.fetchMarketChart(id, marketChart); }
 
     public void startPricePolling() {
-        if (!coinCapWs.isConnected()) {
-            coinCapWs.connect(activeCoinId);
+        if (!mexcWs.isConnected()) {
+            mexcWs.connect(activeSymbol);
         }
     }
 
     public void stopPricePolling() {
-        coinCapWs.disconnect();
+        mexcWs.disconnect();
     }
 
-    @Override protected void onCleared() { coinCapWs.disconnect(); }
+    @Override protected void onCleared() { mexcWs.disconnect(); }
 }

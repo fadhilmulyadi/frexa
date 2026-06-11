@@ -7,32 +7,25 @@ import static org.junit.Assert.*;
 public class CoinSymbolMapperTest {
 
     @Test
-    public void toCryptoCompareFsym_knownCoin_returnsFsym() {
-        assertEquals("BTC",  CoinSymbolMapper.toCryptoCompareFsym("bitcoin"));
-        assertEquals("ETH",  CoinSymbolMapper.toCryptoCompareFsym("ethereum"));
-        assertEquals("BNB",  CoinSymbolMapper.toCryptoCompareFsym("binancecoin"));
-        assertEquals("SOL",  CoinSymbolMapper.toCryptoCompareFsym("solana"));
-        assertEquals("DOGE", CoinSymbolMapper.toCryptoCompareFsym("dogecoin"));
+    public void toMexcSymbol_knownCoin_returnsSymbol() {
+        assertEquals("BTCUSDT",  CoinSymbolMapper.toMexcSymbol("bitcoin"));
+        assertEquals("ETHUSDT",  CoinSymbolMapper.toMexcSymbol("ethereum"));
+        assertEquals("BNBUSDT",  CoinSymbolMapper.toMexcSymbol("binancecoin"));
+        assertEquals("SOLUSDT",  CoinSymbolMapper.toMexcSymbol("solana"));
     }
 
     @Test
-    public void toCryptoCompareFsym_unknownCoin_returnsFallback() {
-        assertEquals("NEWCOIN", CoinSymbolMapper.toCryptoCompareFsym("new-coin"));
+    public void toMexcSymbol_unknownCoin_returnsFallback() {
+        assertEquals("NEWCOINUSDT", CoinSymbolMapper.toMexcSymbol("new-coin"));
     }
 
     @Test
-    public void toAggregate_returnsCorrectValue() {
-        assertEquals(1,  CoinSymbolMapper.toAggregate(60));
-        assertEquals(5,  CoinSymbolMapper.toAggregate(300));
-        assertEquals(15, CoinSymbolMapper.toAggregate(900));
-        assertEquals(30, CoinSymbolMapper.toAggregate(1800));
-        assertEquals(1,  CoinSymbolMapper.toAggregate(3600));
-    }
-
-    @Test
-    public void isHourly_returnsTrueOnlyFor3600() {
-        assertFalse(CoinSymbolMapper.isHourly(60));
-        assertFalse(CoinSymbolMapper.isHourly(1800));
-        assertTrue(CoinSymbolMapper.isHourly(3600));
+    public void toMexcInterval_returnsCorrectInterval() {
+        assertEquals("1m",  CoinSymbolMapper.toMexcInterval(60));
+        assertEquals("5m",  CoinSymbolMapper.toMexcInterval(300));
+        assertEquals("15m", CoinSymbolMapper.toMexcInterval(900));
+        assertEquals("1h",  CoinSymbolMapper.toMexcInterval(3600));
+        assertEquals("4h",  CoinSymbolMapper.toMexcInterval(14400));
+        assertEquals("1d",  CoinSymbolMapper.toMexcInterval(86400));
     }
 }
