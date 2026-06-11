@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CandlestickChartView extends View {
-    private List<List<Double>> ohlcData = new ArrayList<>();
-    private double currentPrice = 0;
+    private volatile List<List<Double>> ohlcData = new ArrayList<>();
+    private volatile double currentPrice = 0;
 
     private final Paint upPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint downPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -28,16 +28,19 @@ public class CandlestickChartView extends View {
 
         wickPaint.setColor(0xFF9A9DA3);
         wickPaint.setStrokeWidth(2f);
+        wickPaint.setStyle(Paint.Style.STROKE);
 
         gridPaint.setColor(0x222A2B30);
         gridPaint.setStrokeWidth(1f);
 
+        liveOutlinePaint.setColor(0xFF36E07A);
         liveOutlinePaint.setStyle(Paint.Style.STROKE);
         liveOutlinePaint.setStrokeWidth(1.5f);
 
         pricePaint.setColor(0xCCFFFFFF);
         pricePaint.setStrokeWidth(1f);
         pricePaint.setStyle(Paint.Style.STROKE);
+        pricePaint.setPathEffect(new DashPathEffect(new float[]{8f, 6f}, 0));
     }
 
     public void setOhlcData(List<List<Double>> data) {
@@ -63,6 +66,10 @@ public class CandlestickChartView extends View {
             if (c.size() < 5) continue;
             minLow = Math.min(minLow, c.get(3));
             maxHigh = Math.max(maxHigh, c.get(2));
+        }
+        if (currentPrice > 0) {
+            maxHigh = Math.max(maxHigh, currentPrice);
+            minLow  = Math.min(minLow, currentPrice);
         }
         double range = maxHigh - minLow;
         if (range == 0) return;
@@ -104,9 +111,9 @@ public class CandlestickChartView extends View {
         }
 
         // Current price dashed line
-        if (currentPrice > 0 && currentPrice >= minLow && currentPrice <= maxHigh) {
-            float yPrice = toY(currentPrice, minLow, range, h, pad);
-            pricePaint.setPathEffect(new DashPathEffect(new float[]{8f, 6f}, 0));
+        if (currentPrice > 0) {
+            double clampedPrice = Math.max(minLow, Math.min(maxHigh, currentPrice));
+            float yPrice = toY(clampedPrice, minLow, range, h, pad);
             canvas.drawLine(0, yPrice, w, yPrice, pricePaint);
         }
     }
