@@ -4,6 +4,9 @@
     <color name="frx_green">#3EE87A</color>
     <color name="frx_lime">#BDF94E</color>
     <color name="frx_gold">#F0B429</color>
+    <color name="frx_grad_start">#19E29A</color>
+    <color name="frx_grad_center">#4EF05A</color>
+    <color name="frx_grad_end">#7DFF4A</color>
 
     <!-- Semantic -->
     <color name="frx_up">#36E07A</color>
