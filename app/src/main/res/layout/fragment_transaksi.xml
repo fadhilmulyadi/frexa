@@ -2,7 +2,8 @@
 <androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/frx_background">
 
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
         android:orientation="vertical" android:paddingBottom="80dp">
@@ -10,11 +11,104 @@
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:text="Transaksi" android:textStyle="bold" android:textSize="22sp"
             android:layout_marginStart="16dp" android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="16dp" android:textColor="@color/frx_text_1" />
+
+        <!-- Tab Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="16dp"
+            android:layout_marginBottom="16dp">
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fixed Time"
+                android:background="@drawable/bg_chip_active"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Forex"
+                android:background="@drawable/bg_chip_inactive"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:textColor="@color/frx_text_2"
+                android:textSize="14sp"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Stocks"
+                android:background="@drawable/bg_chip_inactive"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:textColor="@color/frx_text_2"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <!-- Summary Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_surface"
+            android:layout_marginHorizontal="16dp"
+            android:padding="16dp"
+            android:layout_marginBottom="24dp">
+            
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nominal total"
+                    android:textColor="@color/frx_text_2"
+                    android:textSize="12sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$1,240.50"
+                    android:textColor="@color/frx_text_1"
+                    android:textStyle="bold"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="end">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Profit dan rugi"
+                    android:textColor="@color/frx_text_2"
+                    android:textSize="12sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+$45.20"
+                    android:textColor="@color/frx_green"
+                    android:textStyle="bold"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </LinearLayout>
 
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:text="Posisi Terbuka" android:textStyle="bold" android:textSize="16sp"
-            android:layout_marginStart="16dp" android:layout_marginBottom="8dp" />
+            android:layout_marginStart="16dp" android:layout_marginBottom="8dp"
+            android:textColor="@color/frx_text_1" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_open_trades"
@@ -25,7 +119,8 @@
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:text="Riwayat" android:textStyle="bold" android:textSize="16sp"
             android:layout_marginStart="16dp" android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/frx_text_1" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_history"

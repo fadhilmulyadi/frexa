@@ -1,41 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical" android:padding="16dp">
+    android:orientation="vertical" android:padding="16dp"
+    android:background="@color/frx_background">
 
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:text="Bantuan" android:textStyle="bold" android:textSize="24sp"
-        android:layout_marginBottom="24dp" android:layout_marginTop="8dp" />
+        android:layout_marginBottom="24dp" android:layout_marginTop="8dp"
+        android:textColor="@color/frx_text_1" />
 
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:orientation="horizontal" android:layout_marginBottom="16dp" android:weightSum="2">
+        android:orientation="horizontal" android:layout_marginBottom="12dp" android:weightSum="2">
 
+        <!-- Card 1: Question Circle -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/btn_support"
-            android:layout_width="0dp" android:layout_height="120dp"
-            android:layout_weight="1" android:layout_marginEnd="8dp"
-            android:clickable="true" android:focusable="true">
-            <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
-                android:orientation="vertical" android:gravity="center" android:padding="16dp">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="🎧" android:textSize="28sp" android:layout_marginBottom="8dp" />
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="Dukungan 24/7" android:textStyle="bold" android:textSize="14sp"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="6dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="0dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_surface"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="16dp">
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_question_circle"
+                    app:tint="@color/frx_primary"
+                    android:layout_marginBottom="12dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dukungan 24/7"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:textColor="@color/frx_text_1"
                     android:gravity="center" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- Card 2: Info Circle -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/btn_help"
-            android:layout_width="0dp" android:layout_height="120dp"
-            android:layout_weight="1" android:layout_marginStart="8dp"
-            android:clickable="true" android:focusable="true">
-            <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
-                android:orientation="vertical" android:gravity="center" android:padding="16dp">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="📖" android:textSize="28sp" android:layout_marginBottom="8dp" />
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="Pusat Bantuan" android:textStyle="bold" android:textSize="14sp"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_weight="1"
+            android:layout_marginStart="6dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="0dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_surface"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="16dp">
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_info_circle"
+                    app:tint="@color/frx_primary"
+                    android:layout_marginBottom="12dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pusat Bantuan"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:textColor="@color/frx_text_1"
                     android:gravity="center" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -45,32 +86,70 @@
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
         android:orientation="horizontal" android:weightSum="2">
 
+        <!-- Card 3: Graduation -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/btn_education"
-            android:layout_width="0dp" android:layout_height="120dp"
-            android:layout_weight="1" android:layout_marginEnd="8dp"
-            android:clickable="true" android:focusable="true">
-            <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
-                android:orientation="vertical" android:gravity="center" android:padding="16dp">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="🎓" android:textSize="28sp" android:layout_marginBottom="8dp" />
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="Edukasi Trading" android:textStyle="bold" android:textSize="14sp"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="6dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="0dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_surface"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="16dp">
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_graduation"
+                    app:tint="@color/frx_primary"
+                    android:layout_marginBottom="12dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Edukasi Trading"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:textColor="@color/frx_text_1"
                     android:gravity="center" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- Card 4: Chart Line -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/btn_tutorial"
-            android:layout_width="0dp" android:layout_height="120dp"
-            android:layout_weight="1" android:layout_marginStart="8dp"
-            android:clickable="true" android:focusable="true">
-            <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
-                android:orientation="vertical" android:gravity="center" android:padding="16dp">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="▶" android:textSize="28sp" android:layout_marginBottom="8dp" />
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="Tutorial Trading" android:textStyle="bold" android:textSize="14sp"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_weight="1"
+            android:layout_marginStart="6dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="0dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_surface"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="16dp">
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_chart_line"
+                    app:tint="@color/frx_primary"
+                    android:layout_marginBottom="12dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tutorial Trading"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:textColor="@color/frx_text_1"
                     android:gravity="center" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

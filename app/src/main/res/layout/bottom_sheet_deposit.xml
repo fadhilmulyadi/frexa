@@ -1,61 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="wrap_content"
-    android:orientation="vertical" android:padding="24dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:padding="24dp"
+    android:background="@drawable/bg_surface">
 
     <View android:layout_width="40dp" android:layout_height="4dp"
         android:layout_gravity="center_horizontal" android:layout_marginBottom="20dp"
-        android:background="#CCCCCC" />
+        android:background="@color/frx_text_2" android:alpha="0.2" />
 
-    <!-- Step 0: Pilih metode -->
-    <LinearLayout android:id="@+id/vg_main"
-        android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="Deposit Saldo Virtual" android:textStyle="bold" android:textSize="18sp"
-            android:layout_marginBottom="16dp" />
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="Pilih jumlah deposit untuk menambah saldo virtual Anda."
-            android:textColor="?attr/colorOnSurfaceVariant" android:layout_marginBottom="16dp" />
-    </LinearLayout>
+    <!-- Step Container -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-    <!-- Step 1: Nominal -->
-    <LinearLayout android:id="@+id/vg_nominal"
-        android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:orientation="vertical" android:visibility="gone">
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="Nominal Deposit" android:textStyle="bold" android:textSize="18sp"
-            android:layout_marginBottom="12dp" />
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="$50,000 akan ditambahkan ke saldo virtual Anda."
-            android:textColor="?attr/colorOnSurfaceVariant" />
-    </LinearLayout>
+        <!-- Step 0: Main (Pilih Metode & Nominal) -->
+        <LinearLayout android:id="@+id/vg_main"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Deposit Saldo" android:textStyle="bold" android:textSize="20sp"
+                android:textColor="@color/frx_text_1" android:layout_marginBottom="16dp" />
+            
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Metode Pembayaran" android:textStyle="bold" android:textSize="14sp"
+                android:textColor="@color/frx_text_1" android:layout_marginBottom="8dp" />
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_surface_2"
+                android:padding="16dp"
+                android:layout_marginBottom="16dp"
+                android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Virtual Account BCA"
+                    android:textColor="@color/frx_text_1" />
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_chevron_right"
+                    app:tint="@color/frx_text_2" />
+            </LinearLayout>
 
-    <!-- Step 2: Konfirmasi -->
-    <LinearLayout android:id="@+id/vg_confirm"
-        android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:orientation="vertical" android:visibility="gone">
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="Konfirmasi" android:textStyle="bold" android:textSize="18sp"
-            android:layout_marginBottom="12dp" />
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="Konfirmasi penambahan $50,000 ke saldo virtual Anda."
-            android:textColor="?attr/colorOnSurfaceVariant" />
-    </LinearLayout>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Nominal Deposit" android:textStyle="bold" android:textSize="14sp"
+                android:textColor="@color/frx_text_1" android:layout_marginBottom="8dp" />
 
-    <!-- Step 3: QR -->
-    <LinearLayout android:id="@+id/vg_qr"
-        android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:orientation="vertical" android:gravity="center" android:visibility="gone">
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="Scan QR" android:textStyle="bold" android:textSize="18sp"
-            android:layout_marginBottom="16dp" />
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="🔲" android:textSize="80sp" android:layout_marginBottom="16dp" />
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="Tekan tombol di bawah setelah pembayaran selesai."
-            android:textColor="?attr/colorOnSurfaceVariant" android:gravity="center" />
-    </LinearLayout>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="@drawable/bg_surface_2"
+                android:paddingHorizontal="16dp"
+                android:hint="Min. $10"
+                android:inputType="number"
+                android:textColor="@color/frx_text_1"
+                android:layout_marginBottom="16dp" />
+            
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Promo & Voucher" android:textStyle="bold" android:textSize="14sp"
+                android:textColor="@color/frx_text_1" android:layout_marginBottom="8dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_surface_2"
+                android:padding="16dp"
+                android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Gunakan Voucher"
+                    android:textColor="@color/frx_text_2" />
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_chevron_right"
+                    app:tint="@color/frx_text_2" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Other steps (simplified for now as they are dynamically shown) -->
+        <LinearLayout android:id="@+id/vg_nominal"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical" android:visibility="gone">
+            <!-- Content for nominal picker -->
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/vg_qr"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical" android:gravity="center" android:visibility="gone">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Scan QR" android:textStyle="bold" android:textSize="18sp"
+                android:layout_marginBottom="16dp" />
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:src="@drawable/ic_copy"
+                android:layout_marginBottom="16dp" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Selesaikan pembayaran dalam 15:00"
+                android:textColor="@color/frx_text_2" android:gravity="center" />
+        </LinearLayout>
+
+    </FrameLayout>
 
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
         android:orientation="horizontal" android:layout_marginTop="24dp">
@@ -63,19 +116,19 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_close"
             style="@style/Widget.Material3.Button.OutlinedButton"
-            android:layout_width="wrap_content" android:layout_height="48dp"
-            android:text="Tutup" android:layout_marginEnd="8dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_back"
-            style="@style/Widget.Material3.Button.OutlinedButton"
-            android:layout_width="wrap_content" android:layout_height="48dp"
-            android:text="Kembali" android:visibility="gone" android:layout_marginEnd="8dp" />
+            android:layout_width="wrap_content" android:layout_height="56dp"
+            android:text="Tutup" android:layout_marginEnd="8dp"
+            android:textColor="@color/frx_text_1"
+            app:strokeColor="@color/frx_text_2" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_next"
-            android:layout_width="0dp" android:layout_height="48dp"
-            android:layout_weight="1" android:text="Selanjutnya" />
+            android:layout_width="0dp" android:layout_height="56dp"
+            android:layout_weight="1" android:text="Lanjutkan"
+            android:backgroundTint="@android:color/transparent"
+            android:background="@drawable/btn_cta_grad"
+            app:backgroundTint="@null"
+            android:textColor="@color/white" />
 
     </LinearLayout>
 </LinearLayout>

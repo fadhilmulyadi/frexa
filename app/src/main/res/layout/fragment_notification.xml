@@ -1,13 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical" android:gravity="center">
+    android:orientation="vertical"
+    android:background="@color/frx_background">
 
-    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:text="🔔" android:textSize="64sp" android:layout_marginBottom="16dp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+        
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Notifikasi" android:textStyle="bold" android:textSize="24sp"
+            android:textColor="@color/frx_text_1" />
 
-    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:text="Belum ada notifikasi" android:textSize="18sp"
-        android:textColor="?attr/colorOnSurfaceVariant" />
+        <ImageView
+            android:id="@+id/btn_settings"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_gear"
+            app:tint="@color/frx_text_2" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Mock 8 items -->
+            <include layout="@layout/item_notification_toggle" android:id="@+id/notif_1" />
+            <include layout="@layout/item_notification_toggle" android:id="@+id/notif_2" />
+            <include layout="@layout/item_notification_toggle" android:id="@+id/notif_3" />
+            <include layout="@layout/item_notification_toggle" android:id="@+id/notif_4" />
+            <include layout="@layout/item_notification_toggle" android:id="@+id/notif_5" />
+            <include layout="@layout/item_notification_toggle" android:id="@+id/notif_6" />
+            <include layout="@layout/item_notification_toggle" android:id="@+id/notif_7" />
+            <include layout="@layout/item_notification_toggle" android:id="@+id/notif_8" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

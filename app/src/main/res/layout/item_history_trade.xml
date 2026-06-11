@@ -4,7 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="wrap_content"
     android:layout_marginHorizontal="16dp" android:layout_marginBottom="10dp"
-    app:cardCornerRadius="@dimen/radius_md"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp"
+    app:cardBackgroundColor="@color/frx_surface"
     android:clickable="true" android:focusable="true">
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
         android:orientation="horizontal" android:padding="14dp" android:gravity="center_vertical">
@@ -16,19 +18,23 @@
             android:layout_weight="1" android:orientation="vertical">
             <TextView android:id="@+id/tv_symbol"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:textStyle="bold" android:textSize="15sp" />
+                android:textStyle="bold" android:textSize="15sp"
+                android:textColor="@color/frx_text" />
             <TextView android:id="@+id/tv_direction"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:textColor="@color/frx_text_2" />
         </LinearLayout>
         <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:orientation="vertical" android:gravity="end">
             <TextView android:id="@+id/tv_dur"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:textSize="12sp" android:textColor="?attr/colorOnSurfaceVariant" />
+                android:textSize="12sp"
+                android:textColor="@color/frx_text_3" />
             <TextView android:id="@+id/tv_pnl"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:textStyle="bold" android:textSize="14sp" />
+                android:textStyle="bold" android:textSize="14sp"
+                android:textColor="@color/frx_green" />
         </LinearLayout>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>
