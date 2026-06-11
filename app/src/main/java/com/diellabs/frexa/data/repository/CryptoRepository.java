@@ -19,10 +19,13 @@ public class CryptoRepository {
     private final CachedPriceDao cacheDao;
     private final AppExecutors exec;
 
+    @FunctionalInterface
     public interface OhlcCallback {
         void onResult(List<List<Double>> data);
     }
 
+    /** Callback fires on OkHttp background thread — use postValue, not setValue. */
+    @FunctionalInterface
     public interface PriceCallback {
         void onPrice(double price);
     }
@@ -85,7 +88,9 @@ public class CryptoRepository {
                                              Response<List<List<Double>>> r) {
                 if (r.isSuccessful() && r.body() != null) callback.onResult(r.body());
             }
-            @Override public void onFailure(Call<List<List<Double>>> c, Throwable t) {}
+            @Override public void onFailure(Call<List<List<Double>>> c, Throwable t) {
+                // Silent — consistent with existing fetchOhlc behavior; caller handles stale/empty chart
+            }
         });
     }
 
