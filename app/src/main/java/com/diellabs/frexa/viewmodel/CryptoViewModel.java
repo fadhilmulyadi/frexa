@@ -35,6 +35,7 @@ public class CryptoViewModel extends AndroidViewModel {
     public void fetchMarkets() { repo.fetchMarkets(coinList, isLoading, errorMessage); }
 
     public void setActiveCoin(String id) {
+        stopPricePolling();
         activeCoinId = id;
         int tf = selectedTimeframe.getValue() != null ? selectedTimeframe.getValue() : 60;
         candleBuilder.reset(tf);
@@ -42,15 +43,19 @@ public class CryptoViewModel extends AndroidViewModel {
             ohlcData.postValue(data);
             candleBuilder.setHistoricalCandles(data);
             chartCandles.postValue(candleBuilder.getCandles());
+            startPricePolling();
         });
     }
 
     public void setTimeframe(int seconds) {
-        selectedTimeframe.setValue(seconds);
+        stopPricePolling();
+        selectedTimeframe.postValue(seconds);
         candleBuilder.reset(seconds);
         repo.fetchOhlc(activeCoinId, data -> {
+            ohlcData.postValue(data);
             candleBuilder.setHistoricalCandles(data);
             chartCandles.postValue(candleBuilder.getCandles());
+            startPricePolling();
         });
     }
 
