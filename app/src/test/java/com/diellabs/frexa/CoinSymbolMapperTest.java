@@ -7,25 +7,24 @@ import static org.junit.Assert.*;
 public class CoinSymbolMapperTest {
 
     @Test
-    public void toBitgetSymbol_knownCoin_returnsSymbol() {
-        assertEquals("BTCUSDT",  CoinSymbolMapper.toBitgetSymbol("bitcoin"));
-        assertEquals("ETHUSDT",  CoinSymbolMapper.toBitgetSymbol("ethereum"));
-        assertEquals("BNBUSDT",  CoinSymbolMapper.toBitgetSymbol("binancecoin"));
-        assertEquals("SOLUSDT",  CoinSymbolMapper.toBitgetSymbol("solana"));
+    public void toBitfinexSymbol_knownCoin_returnsSymbol() {
+        assertEquals("tBTCUSD",  CoinSymbolMapper.toBitfinexSymbol("bitcoin"));
+        assertEquals("tETHUSD",  CoinSymbolMapper.toBitfinexSymbol("ethereum"));
+        assertEquals("tBNBUSD",  CoinSymbolMapper.toBitfinexSymbol("binancecoin"));
+        assertEquals("tSOLUSD",  CoinSymbolMapper.toBitfinexSymbol("solana"));
     }
 
     @Test
-    public void toBitgetSymbol_unknownCoin_returnsFallback() {
-        assertEquals("NEWCOINUSDT", CoinSymbolMapper.toBitgetSymbol("new-coin"));
+    public void toBitfinexSymbol_unknownCoin_returnsFallback() {
+        assertEquals("tNEWCOINUSD", CoinSymbolMapper.toBitfinexSymbol("new-coin"));
     }
 
     @Test
-    public void toBitgetGranularity_returnsCorrectGranularity() {
-        assertEquals("1min",  CoinSymbolMapper.toBitgetGranularity(60));
-        assertEquals("5min",  CoinSymbolMapper.toBitgetGranularity(300));
-        assertEquals("15min", CoinSymbolMapper.toBitgetGranularity(900));
-        assertEquals("1h",    CoinSymbolMapper.toBitgetGranularity(3600));
-        assertEquals("4h",    CoinSymbolMapper.toBitgetGranularity(14400));
-        assertEquals("1day",  CoinSymbolMapper.toBitgetGranularity(86400));
+    public void toBitfinexTimeframe_returnsCorrectTimeframe() {
+        assertEquals("1m",  CoinSymbolMapper.toBitfinexTimeframe(60));
+        assertEquals("5m",  CoinSymbolMapper.toBitfinexTimeframe(300));
+        assertEquals("15m", CoinSymbolMapper.toBitfinexTimeframe(900));
+        assertEquals("1h",  CoinSymbolMapper.toBitfinexTimeframe(3600));
+        assertEquals("1D",  CoinSymbolMapper.toBitfinexTimeframe(86400));
     }
 }
