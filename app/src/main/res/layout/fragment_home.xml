@@ -37,6 +37,17 @@
                 android:fontFamily="@font/schibsted_grotesk"
                 android:textStyle="bold" />
 
+            <ImageView
+                android:id="@+id/btn_theme"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/bg_surface"
+                android:padding="6dp"
+                android:scaleType="center"
+                android:src="@drawable/ic_sun"
+                android:contentDescription="Toggle theme" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
