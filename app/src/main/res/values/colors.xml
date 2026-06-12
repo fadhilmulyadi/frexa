@@ -1,40 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Brand -->
-    <color name="frx_green">#3EE87A</color>
-    <color name="frx_lime">#BDF94E</color>
-    <color name="frx_gold">#F0B429</color>
-    <color name="frx_grad_start">#19E29A</color>
-    <color name="frx_grad_center">#4EF05A</color>
-    <color name="frx_grad_end">#7DFF4A</color>
+    <color name="frx_amber">#E8B25A</color>
+    <color name="frx_amber_dark">#9A6A1F</color>
 
     <!-- Semantic -->
-    <color name="frx_up">#36E07A</color>
-    <color name="frx_down">#FF5D5D</color>
+    <color name="frx_up">#3DD68C</color>
+    <color name="frx_down">#FF6259</color>
 
     <!-- Dark surfaces -->
-    <color name="frx_bg">#0A0B0D</color>
-    <color name="frx_surface">#17181B</color>
-    <color name="frx_surface_2">#1F2024</color>
-    <color name="frx_surface_3">#292A2F</color>
+    <color name="frx_bg">#0B0D0F</color>
+    <color name="frx_card">#13171B</color>
+    <color name="frx_surface">#1B2025</color>
 
-    <!-- Dark text -->
+    <!-- Text -->
     <color name="white">#FFFFFF</color>
-    <color name="frx_text">#F4F5F7</color>
-    <color name="frx_text_2">#9A9DA3</color>
-    <color name="frx_text_3">#63666C</color>
-    <color name="frx_hairline">#12FFFFFF</color>
-    <color name="frx_cta_text">#04210F</color>
+    <color name="frx_text">#EDF1F4</color>
+    <color name="frx_text_2">#9AA4AD</color>
+    <color name="frx_text_3">#5C666F</color>
+    <color name="frx_hairline">#0FFFFFFF</color>
+    <color name="frx_cta_text">#07130C</color>
 
-    <!-- Light surfaces -->
-    <color name="frx_bg_light">#F4F5F7</color>
-    <color name="frx_surface_light">#FFFFFF</color>
-    <color name="frx_surface_2_light">#F0F1F3</color>
-    <color name="frx_surface_3_light">#E5E6EA</color>
+    <!-- Up/Down with opacity variants -->
+    <color name="frx_up_12">#1F3DD68C</color>
+    <color name="frx_down_12">#1FFF6259</color>
+    <color name="frx_amber_07">#12E8B25A</color>
+    <color name="frx_amber_22">#38E8B25A</color>
 
-    <!-- Light text -->
-    <color name="frx_text_light">#0A0B0D</color>
-    <color name="frx_text_2_light">#4A4D55</color>
-    <color name="frx_text_3_light">#9A9DA3</color>
-    <color name="frx_hairline_light">#E0E1E5</color>
+    <!-- Blue accent for ETH allocation bar -->
+    <color name="frx_blue_accent">#8AA7C4</color>
 </resources>

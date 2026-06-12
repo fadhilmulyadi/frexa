@@ -5,9 +5,10 @@ import java.util.Map;
 
 public final class CoinSymbolMapper {
     private static final Map<String, String> COIN_TO_BASE = new HashMap<>();
+    private static final Map<String, String> COIN_MONOGRAM = new HashMap<>();
 
     static {
-        COIN_TO_BASE.put("bitcoin",            "BTC");
+        COIN_TO_BASE.put("bitcoin", "BTC");
         COIN_TO_BASE.put("ethereum",           "ETH");
         COIN_TO_BASE.put("binancecoin",        "BNB");
         COIN_TO_BASE.put("solana",             "SOL");
@@ -18,7 +19,7 @@ public final class CoinSymbolMapper {
         COIN_TO_BASE.put("avalanche-2",        "AVAX");
         COIN_TO_BASE.put("tron",               "TRX");
         COIN_TO_BASE.put("chainlink",          "LINK");
-        COIN_TO_BASE.put("polygon",            "MATIC");
+        COIN_TO_BASE.put("polygon-pos",        "POL");
         COIN_TO_BASE.put("litecoin",           "LTC");
         COIN_TO_BASE.put("uniswap",            "UNI");
         COIN_TO_BASE.put("near",               "NEAR");
@@ -33,12 +34,29 @@ public final class CoinSymbolMapper {
         COIN_TO_BASE.put("pepe",               "PEPE");
         COIN_TO_BASE.put("toncoin",            "TON");
         COIN_TO_BASE.put("internet-computer",  "ICP");
+
+        COIN_MONOGRAM.put("bitcoin",     "\u20BF");
+        COIN_MONOGRAM.put("ethereum",    "\u039E");
+        COIN_MONOGRAM.put("solana",      "\u25CE");
+        COIN_MONOGRAM.put("dogecoin",    "\u00D0");
+        COIN_MONOGRAM.put("ripple",      "\u2715");
+    }
+
+    public static String getBase(String coinId) {
+        String base = COIN_TO_BASE.get(coinId);
+        if (base == null) base = coinId.replace("-", "").toUpperCase();
+        return base;
+    }
+
+    public static String getMonogram(String coinId) {
+        String mono = COIN_MONOGRAM.get(coinId);
+        if (mono != null) return mono;
+        String base = getBase(coinId);
+        return base.length() >= 2 ? base.substring(0, 2) : base;
     }
 
     public static String toBitfinexSymbol(String coinId) {
-        String base = COIN_TO_BASE.get(coinId);
-        if (base == null) base = coinId.replace("-", "").toUpperCase();
-        return "t" + base + "USD";
+        return "t" + getBase(coinId) + "USD";
     }
 
     public static String toBitfinexTimeframe(int seconds) {

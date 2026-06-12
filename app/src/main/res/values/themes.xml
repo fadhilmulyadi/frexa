@@ -1,9 +1,9 @@
 <resources>
     <style name="Theme.Frexa" parent="Theme.Material3.Dark.NoActionBar">
-        <item name="android:fontFamily">@font/plus_jakarta_sans</item>
-        <item name="colorPrimary">@color/frx_green</item>
+        <item name="android:fontFamily">@font/schibsted_grotesk</item>
+        <item name="colorPrimary">@color/frx_amber</item>
         <item name="colorOnPrimary">@color/frx_bg</item>
-        <item name="colorSurface">@color/frx_surface</item>
+        <item name="colorSurface">@color/frx_card</item>
         <item name="colorOnSurface">@color/frx_text</item>
         <item name="android:windowBackground">@color/frx_bg</item>
         <item name="android:statusBarColor">@color/frx_bg</item>

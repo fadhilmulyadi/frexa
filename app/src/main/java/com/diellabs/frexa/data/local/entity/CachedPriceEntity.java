@@ -14,6 +14,9 @@ public class CachedPriceEntity {
     public double currentPrice;
     public double priceChangePercent24h;
     public int marketCapRank;
-    public int profitPercent;
+    public double high24h;
+    public double low24h;
+    public double marketCap;
+    public double volume24h;
     public long lastUpdated;
 }

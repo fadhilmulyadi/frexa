@@ -13,14 +13,8 @@ public interface CoinGeckoService {
         @Query("order") String order,
         @Query("per_page") int perPage,
         @Query("page") int page,
-        @Query("sparkline") boolean sparkline
-    );
-
-    @GET("coins/{id}/ohlc")
-    Call<List<List<Double>>> getOhlc(
-        @Path("id") String coinId,
-        @Query("vs_currency") String currency,
-        @Query("days") int days
+        @Query("sparkline") boolean sparkline,
+        @Query("price_change_percentage") String priceChangePercentage
     );
 
     @GET("simple/price")
@@ -28,13 +22,6 @@ public interface CoinGeckoService {
         @Query("ids") String ids,
         @Query("vs_currencies") String currencies,
         @Query("include_24hr_change") boolean change
-    );
-
-    @GET("coins/{id}/market_chart")
-    Call<MarketChart> getMarketChart(
-        @Path("id") String coinId,
-        @Query("vs_currency") String currency,
-        @Query("days") int days
     );
 
     @GET("coins/{id}")
@@ -45,4 +32,7 @@ public interface CoinGeckoService {
         @Query("community_data") boolean communityData,
         @Query("developer_data") boolean developerData
     );
+
+    @GET("global")
+    Call<GlobalData> getGlobalData();
 }

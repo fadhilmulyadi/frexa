@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/frx_card"
+    android:orientation="vertical"
+    android:paddingHorizontal="20dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="26dp">
+
+    <!-- Drag handle -->
+    <View
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"
+        android:background="@color/frx_hairline" />
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_order_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Beli BTC"
+            android:textColor="@color/frx_text"
+            android:textSize="17sp"
+            android:fontFamily="@font/schibsted_grotesk"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_cash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kas: Rp100.000.000"
+            android:textColor="@color/frx_text_2"
+            android:textSize="11sp"
+            android:fontFamily="@font/spline_sans_mono" />
+    </LinearLayout>
+
+    <!-- Nominal input -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/bg_surface"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_nominal_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/label_nominal_buy"
+                android:textColor="@color/frx_text_2"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/tv_at_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/frx_text_3"
+                android:textSize="9.5sp"
+                android:fontFamily="@font/spline_sans_mono" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/et_nominal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@null"
+            android:hint="0"
+            android:inputType="number"
+            android:textColor="@color/frx_text"
+            android:textColorHint="@color/frx_text_3"
+            android:textSize="24sp"
+            android:fontFamily="@font/spline_sans_mono"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_converted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="≈ 0 BTC"
+            android:textColor="@color/frx_amber"
+            android:textSize="11.5sp"
+            android:fontFamily="@font/spline_sans_mono" />
+    </LinearLayout>
+
+    <!-- Quick amounts -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/quick_100rb"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/bg_pill_inactive"
+            android:gravity="center"
+            android:paddingVertical="8dp"
+            android:text="100 rb"
+            android:textColor="@color/frx_text_2"
+            android:textSize="11sp"
+            android:fontFamily="@font/spline_sans_mono"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/quick_1jt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="4dp"
+            android:background="@drawable/bg_pill_inactive"
+            android:gravity="center"
+            android:paddingVertical="8dp"
+            android:text="1 jt"
+            android:textColor="@color/frx_text_2"
+            android:textSize="11sp"
+            android:fontFamily="@font/spline_sans_mono"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/quick_5jt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="4dp"
+            android:background="@drawable/bg_pill_inactive"
+            android:gravity="center"
+            android:paddingVertical="8dp"
+            android:text="5 jt"
+            android:textColor="@color/frx_text_2"
+            android:textSize="11sp"
+            android:fontFamily="@font/spline_sans_mono"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/quick_max"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="4dp"
+            android:background="@drawable/bg_pill_inactive"
+            android:gravity="center"
+            android:paddingVertical="8dp"
+            android:text="Maks"
+            android:textColor="@color/frx_text_2"
+            android:textSize="11sp"
+            android:fontFamily="@font/spline_sans_mono"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Summary -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_bg_inner"
+        android:orientation="vertical"
+        android:padding="14dp">
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/label_order_value" android:textColor="@color/frx_text_2" android:textSize="12sp" />
+            <TextView android:id="@+id/tv_order_value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Rp0" android:textColor="@color/frx_text" android:textSize="12.5sp" android:fontFamily="@font/spline_sans_mono" android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="9dp" android:orientation="horizontal">
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/label_fee_taker" android:textColor="@color/frx_text_2" android:textSize="12sp" />
+            <TextView android:id="@+id/tv_fee" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Rp0" android:textColor="@color/frx_text" android:textSize="12.5sp" android:fontFamily="@font/spline_sans_mono" android:textStyle="bold" />
+        </LinearLayout>
+
+        <View android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginVertical="9dp" android:background="@color/frx_hairline" />
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/label_total" android:textColor="@color/frx_text" android:textSize="12.5sp" android:textStyle="bold" />
+            <TextView android:id="@+id/tv_total" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Rp0" android:textColor="@color/frx_amber" android:textSize="14sp" android:fontFamily="@font/spline_sans_mono" android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp" android:orientation="horizontal">
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/label_remaining_cash" android:textColor="@color/frx_text_3" android:textSize="11sp" />
+            <TextView android:id="@+id/tv_remaining" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Rp0" android:textColor="@color/frx_text_3" android:textSize="11sp" android:fontFamily="@font/spline_sans_mono" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Confirm button -->
+    <TextView
+        android:id="@+id/btn_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_btn_buy"
+        android:gravity="center"
+        android:paddingVertical="16dp"
+        android:text="@string/btn_confirm_buy"
+        android:textColor="#07130C"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:text="@string/label_simulation"
+        android:textColor="@color/frx_text_3"
+        android:textSize="10.5sp" />
+</LinearLayout>

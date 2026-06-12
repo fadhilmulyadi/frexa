@@ -23,10 +23,5 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".ui.tradedetail.TradeDetailActivity"
-            android:exported="false"
-            android:parentActivityName=".MainActivity" />
-
     </application>
 </manifest>

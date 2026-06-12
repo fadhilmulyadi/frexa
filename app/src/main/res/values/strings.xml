@@ -1,26 +1,86 @@
 <resources>
     <string name="app_name">Frexa</string>
-    <string name="tab_home">Beranda</string>
-    <string name="tab_transaksi">Transaksi</string>
-    <string name="tab_terminal">Terminal</string>
-    <string name="tab_bantuan">Bantuan</string>
+
+    <!-- Tab names -->
+    <string name="tab_home">Home</string>
+    <string name="tab_markets">Markets</string>
+    <string name="tab_portfolio">Portfolio</string>
+    <string name="tab_orders">Orders</string>
+    <string name="tab_watchlist">Watchlist</string>
+
+    <!-- Common -->
     <string name="error_no_network">Tidak ada jaringan internet</string>
     <string name="banner_offline">Menampilkan data terakhir — Tidak ada jaringan</string>
     <string name="btn_refresh">Refresh</string>
-    <string name="label_up">NAIK</string>
-    <string name="label_down">TURUN</string>
-    <string name="label_balance">Saldo Virtual</string>
-    <string name="soon">Segera Hadir</string>
-
-    <!-- Deposit Strings -->
-    <string name="title_deposit">Deposit</string>
-    <string name="label_account_info">IDR Akun Anda No.121105</string>
-    <string name="label_payment_method">Metode Pembayaran</string>
-    <string name="method_bca_va">Virtual Account BCA</string>
-    <string name="label_nominal_deposit">Nominal Deposit</string>
-    <string name="hint_min_deposit">Min. $10</string>
-    <string name="title_scan_qr">Scan QR</string>
-    <string name="label_payment_timer">Selesaikan pembayaran dalam 15:00</string>
     <string name="btn_back">Kembali</string>
     <string name="btn_next">Selanjutnya</string>
+
+    <!-- Home -->
+    <string name="label_portfolio_value">Total Nilai Portofolio</string>
+    <string name="label_24h">24 jam terakhir</string>
+    <string name="label_7day">7 hari terakhir</string>
+    <string name="label_cash">Kas Tersedia</string>
+    <string name="label_crypto_assets">Nilai Aset Crypto</string>
+    <string name="label_allocation">Alokasi Aset</string>
+    <string name="label_recent_transactions">Transaksi Terbaru</string>
+    <string name="label_see_all">Lihat semua</string>
+    <string name="label_live">Live · 24/7</string>
+
+    <!-- Markets -->
+    <string name="label_markets">Markets</string>
+    <string name="hint_search_coin">Cari koin — mis. BTC, Solana…</string>
+    <string name="label_btc_dominance">Dominasi BTC</string>
+    <string name="label_fear_greed">Fear &amp; Greed</string>
+    <string name="label_global_mcap">Kap. Pasar Global</string>
+    <string name="tab_top_gainers">Top Gainers</string>
+    <string name="tab_top_losers">Top Losers</string>
+    <string name="tab_volume">Volume</string>
+    <string name="label_range_24h">RENTANG 24J</string>
+
+    <!-- Portfolio -->
+    <string name="label_modal">Modal (Investasi)</string>
+    <string name="label_current_value">Nilai Sekarang</string>
+    <string name="label_unrealized_pnl">Unrealized P&amp;L</string>
+
+    <!-- Orders -->
+    <string name="label_orders">Orders</string>
+    <string name="label_buy">BELI</string>
+    <string name="label_sell">JUAL</string>
+    <string name="filter_all">Semua</string>
+    <string name="label_transactions">Transaksi</string>
+    <string name="label_win_rate">Win rate</string>
+    <string name="label_best_trade">Trade terbaik</string>
+
+    <!-- Watchlist -->
+    <string name="label_watchlist">Watchlist</string>
+    <string name="btn_add_coin">+ Tambah koin</string>
+
+    <!-- Order Sheet -->
+    <string name="label_market">Market</string>
+    <string name="label_limit">Limit</string>
+    <string name="label_stop_loss">Stop-Loss</string>
+    <string name="label_nominal_buy">Nominal beli (Rp)</string>
+    <string name="label_order_value">Nilai order</string>
+    <string name="label_fee_taker">Fee taker (0,15%)</string>
+    <string name="label_total">Total</string>
+    <string name="label_remaining_cash">Sisa kas setelah order</string>
+    <string name="btn_confirm_buy">Konfirmasi Beli</string>
+    <string name="btn_confirm_sell">Konfirmasi Jual</string>
+    <string name="label_simulation">Simulasi lokal — tidak ada order riil yang dikirim ke exchange.</string>
+
+    <!-- Coin Detail -->
+    <string name="label_performance">Performa</string>
+    <string name="label_24h_low">24J LOW</string>
+    <string name="label_24h_high">24J HIGH</string>
+    <string name="label_price_position">POSISI HARGA</string>
+    <string name="label_your_position">Posisi Anda</string>
+
+    <!-- AI Assistant -->
+    <string name="label_ai_assistant">Asisten AI</string>
+    <string name="hint_ask_ai">Tanya tentang koin atau portofolio…</string>
+    <string name="label_ai_disclaimer">Jawaban AI bersifat simulasi &amp; edukasi — bukan rekomendasi atau nasihat keuangan.</string>
+
+    <!-- Deposit (removed, kept for compat) -->
+    <string name="label_balance">Saldo Virtual</string>
+    <string name="soon">Segera Hadir</string>
 </resources>

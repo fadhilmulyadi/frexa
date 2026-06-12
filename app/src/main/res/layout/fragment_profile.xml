@@ -51,7 +51,7 @@
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_marginBottom="16dp"
-                    android:background="@drawable/bg_surface_2"
+                    android:background="@drawable/bg_surface"
                     android:padding="16dp">
 
                     <ImageView

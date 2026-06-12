@@ -7,14 +7,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import java.util.concurrent.TimeUnit;
 
 public class RetrofitClient {
-    private static final String COINGECKO = "https://api.coingecko.com/api/v3/";
-    private static final String GEMINI    = "https://generativelanguage.googleapis.com/";
-    // Cloudflare Worker Proxy for Bitfinex
-    private static final String PROXY_BASE = "https://frexa-api-gateaway.dielnzee.workers.dev/";
+    private static final String COINGECKO    = "https://api.coingecko.com/api/v3/";
+    private static final String COINPAPRIKA  = "https://api.coinpaprika.com/v1/";
+    private static final String GEMINI       = "https://generativelanguage.googleapis.com/";
+    private static final String FEAR_GREED   = "https://api.alternative.me/";
 
-    private static CoinGeckoService coinGecko;
-    private static GeminiService    gemini;
-    private static BitfinexService  bitfinex;
+    private static CoinGeckoService  coinGecko;
+    private static CoinPaprikaService coinPaprika;
+    private static GeminiService     gemini;
+    private static FearGreedService  fearGreed;
 
     private static OkHttpClient client() {
         HttpLoggingInterceptor log = new HttpLoggingInterceptor();
@@ -33,6 +34,14 @@ public class RetrofitClient {
         return coinGecko;
     }
 
+    public static CoinPaprikaService getCoinPaprikaService() {
+        if (coinPaprika == null) coinPaprika = new Retrofit.Builder()
+                .baseUrl(COINPAPRIKA).client(client())
+                .addConverterFactory(GsonConverterFactory.create()).build()
+                .create(CoinPaprikaService.class);
+        return coinPaprika;
+    }
+
     public static GeminiService getGeminiService() {
         if (gemini == null) gemini = new Retrofit.Builder()
                 .baseUrl(GEMINI).client(client())
@@ -41,11 +50,11 @@ public class RetrofitClient {
         return gemini;
     }
 
-    public static BitfinexService getBitfinexService() {
-        if (bitfinex == null) bitfinex = new Retrofit.Builder()
-                .baseUrl(PROXY_BASE).client(client())
+    public static FearGreedService getFearGreedService() {
+        if (fearGreed == null) fearGreed = new Retrofit.Builder()
+                .baseUrl(FEAR_GREED).client(client())
                 .addConverterFactory(GsonConverterFactory.create()).build()
-                .create(BitfinexService.class);
-        return bitfinex;
+                .create(FearGreedService.class);
+        return fearGreed;
     }
 }

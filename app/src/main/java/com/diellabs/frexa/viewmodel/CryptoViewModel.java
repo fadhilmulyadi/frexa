@@ -4,79 +4,61 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
-import com.diellabs.frexa.data.remote.api.BitfinexWebSocketManager;
-import com.diellabs.frexa.data.remote.api.CoinSymbolMapper;
 import com.diellabs.frexa.data.remote.model.*;
 import com.diellabs.frexa.data.repository.CryptoRepository;
-import com.diellabs.frexa.ui.terminal.LiveCandleBuilder;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CryptoViewModel extends AndroidViewModel {
     public final MutableLiveData<List<CoinMarket>> coinList = new MutableLiveData<>();
+    public final MutableLiveData<List<CoinMarket>> topGainers = new MutableLiveData<>();
+    public final MutableLiveData<List<CoinMarket>> topLosers = new MutableLiveData<>();
     public final MutableLiveData<Double> livePrice = new MutableLiveData<>();
-    public final MutableLiveData<List<List<Double>>> ohlcData = new MutableLiveData<>();
-    public final MutableLiveData<List<List<Double>>> chartCandles = new MutableLiveData<>();
-    public final MutableLiveData<MarketChart> marketChart = new MutableLiveData<>();
+    public final MutableLiveData<GlobalData> globalData = new MutableLiveData<>();
     public final MutableLiveData<Boolean> isLoading = new MutableLiveData<>(false);
     public final MutableLiveData<String> errorMessage = new MutableLiveData<>();
-    public final MutableLiveData<Integer> selectedTimeframe = new MutableLiveData<>(60);
+    public final MutableLiveData<Integer> fearGreedValue = new MutableLiveData<>();
+    public final MutableLiveData<String> fearGreedLabel = new MutableLiveData<>();
+    public final MutableLiveData<CoinDetail> coinDetail = new MutableLiveData<>();
 
     private final CryptoRepository repo;
-    private final LiveCandleBuilder candleBuilder = new LiveCandleBuilder(60);
-    private final BitfinexWebSocketManager wsManager = new BitfinexWebSocketManager();
-
-    private String activeCoinId = "bitcoin";
-    private String activeSymbol = "tBTCUSD";
 
     public CryptoViewModel(@NonNull Application app) {
         super(app);
         repo = new CryptoRepository(app);
     }
 
-    public void fetchMarkets() { repo.fetchMarkets(coinList, isLoading, errorMessage); }
-
-    public void setActiveCoin(String id) {
-        activeCoinId = id;
-        activeSymbol = CoinSymbolMapper.toBitfinexSymbol(id);
-        int tf = selectedTimeframe.getValue() != null ? selectedTimeframe.getValue() : 60;
-
-        candleBuilder.reset(tf);
-
-        repo.fetchBitfinexKlines(activeSymbol, tf, 60, data -> {
-            ohlcData.postValue(data);
-            candleBuilder.setHistoricalCandles(data);
-            chartCandles.postValue(candleBuilder.getCandles());
-        });
-
-        startPricePolling();
+    public void fetchMarkets() {
+        repo.fetchMarkets(coinList, isLoading, errorMessage);
     }
 
-    public void setTimeframe(int seconds) {
-        selectedTimeframe.postValue(seconds);
-        candleBuilder.reset(seconds);
+    public void computeTopMovers() {
+        List<CoinMarket> all = coinList.getValue();
+        if (all == null || all.isEmpty()) return;
 
-        repo.fetchBitfinexKlines(activeSymbol, seconds, 60, data -> {
-            ohlcData.postValue(data);
-            candleBuilder.setHistoricalCandles(data);
-            chartCandles.postValue(candleBuilder.getCandles());
-        });
+        List<CoinMarket> gainers = new ArrayList<>(all);
+        Collections.sort(gainers, (a, b) -> Double.compare(b.priceChangePercentage24h, a.priceChangePercentage24h));
+        topGainers.postValue(gainers.subList(0, Math.min(20, gainers.size())));
+
+        List<CoinMarket> losers = new ArrayList<>(all);
+        Collections.sort(losers, (a, b) -> Double.compare(a.priceChangePercentage24h, b.priceChangePercentage24h));
+        topLosers.postValue(losers.subList(0, Math.min(20, losers.size())));
     }
 
-    public void fetchMarketChart(String id) { repo.fetchMarketChart(id, marketChart); }
-
-    public void startPricePolling() {
-        wsManager.connect(activeSymbol, price -> {
-            candleBuilder.addTick(price, System.currentTimeMillis());
-            chartCandles.postValue(candleBuilder.getCandles());
-            livePrice.postValue(price);
-        });
+    public void fetchGlobalData() {
+        repo.fetchGlobalData(globalData, errorMessage);
     }
 
-    public void stopPricePolling() {
-        wsManager.disconnect();
+    public void fetchLivePrice(String coinId) {
+        repo.fetchLivePrice(coinId, price -> livePrice.postValue(price));
     }
 
-    @Override protected void onCleared() {
-        wsManager.disconnect();
+    public void fetchFearGreed() {
+        repo.fetchFearGreed(fearGreedValue, fearGreedLabel);
+    }
+
+    public void fetchCoinDetail(String coinId) {
+        repo.fetchCoinDetail(coinId, coinDetail, errorMessage);
     }
 }

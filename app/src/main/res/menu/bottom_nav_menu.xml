@@ -2,10 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/homeFragment"
         android:icon="@drawable/ic_home" android:title="@string/tab_home" />
-<item android:id="@+id/transaksiFragment"
-        android:icon="@drawable/ic_transaksi" android:title="@string/tab_transaksi" />
-    <item android:id="@+id/terminalFragment"
-        android:icon="@drawable/ic_terminal" android:title="@string/tab_terminal" />
-    <item android:id="@+id/bantuanFragment"
-        android:icon="@drawable/ic_bantuan" android:title="@string/tab_bantuan" />
+    <item android:id="@+id/marketsFragment"
+        android:icon="@drawable/ic_markets" android:title="@string/tab_markets" />
+    <item android:id="@+id/portfolioFragment"
+        android:icon="@drawable/ic_portfolio" android:title="@string/tab_portfolio" />
+    <item android:id="@+id/ordersFragment"
+        android:icon="@drawable/ic_orders" android:title="@string/tab_orders" />
+    <item android:id="@+id/watchlistFragment"
+        android:icon="@drawable/ic_watchlist" android:title="@string/tab_watchlist" />
 </menu>
