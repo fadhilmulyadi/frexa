@@ -7,7 +7,6 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 import com.diellabs.frexa.databinding.ActivityMainBinding;
-import com.diellabs.frexa.util.UserPrefs;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,8 +20,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        UserPrefs prefs = new UserPrefs(this);
-
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
