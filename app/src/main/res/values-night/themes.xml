@@ -1,5 +1,5 @@
 <resources>
-    <style name="Theme.Frexa" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Theme.Frexa" parent="Theme.Material3.Dark.NoActionBar">
         <item name="android:fontFamily">@font/schibsted_grotesk</item>
         <item name="colorPrimary">@color/frx_amber</item>
         <item name="colorOnPrimary">@color/frx_bg</item>
