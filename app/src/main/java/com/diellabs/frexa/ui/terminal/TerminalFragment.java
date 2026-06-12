@@ -4,11 +4,15 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.*;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import com.diellabs.frexa.data.local.entity.TradeEntity;
 import com.diellabs.frexa.databinding.FragmentTerminalBinding;
 import com.diellabs.frexa.ui.deposit.DepositBottomSheetFragment;
 import com.diellabs.frexa.util.CurrencyFormatter;
@@ -16,8 +20,9 @@ import com.diellabs.frexa.util.UserPrefs;
 import com.diellabs.frexa.viewmodel.CryptoViewModel;
 import com.diellabs.frexa.viewmodel.TradingViewModel;
 import com.google.android.material.button.MaterialButton;
+import java.util.List;
 
-public class TerminalFragment extends Fragment {
+public class TerminalFragment extends Fragment implements ActiveTradeBottomSheetFragment.Callback {
     private FragmentTerminalBinding b;
     private CryptoViewModel cryptoVm;
     private TradingViewModel tradingVm;
@@ -32,6 +37,8 @@ public class TerminalFragment extends Fragment {
     private double currentPrice = 0;
 
     private static final int COLOR_ACTIVE = 0xFF36E07A;
+    private boolean chartReady = false;
+    private List<List<Double>> pendingInitData = null;
 
     @Nullable @Override
     public View onCreateView(@NonNull LayoutInflater inf, ViewGroup parent, Bundle saved) {
@@ -39,10 +46,59 @@ public class TerminalFragment extends Fragment {
         return b.getRoot();
     }
 
+    private void setupWebView() {
+        WebSettings ws = b.chart.getSettings();
+        ws.setJavaScriptEnabled(true);
+        ws.setDomStorageEnabled(true);
+        ws.setLoadWithOverviewMode(true);
+        ws.setUseWideViewPort(true);
+        b.chart.setBackgroundColor(0xFF1A1C20);
+        b.chart.setWebViewClient(new WebViewClient() {
+            @Override public void onPageFinished(WebView view, String url) {
+                chartReady = true;
+                if (pendingInitData != null) {
+                    evalInitChart(pendingInitData);
+                    pendingInitData = null;
+                }
+            }
+        });
+        b.chart.loadUrl("file:///android_asset/chart.html");
+    }
+
+    private void evalInitChart(List<List<Double>> data) {
+        String json = candlesToJson(data);
+        b.chart.evaluateJavascript("initChart('" + json + "')", null);
+    }
+
+    private void evalUpdateLastCandle(List<List<Double>> data) {
+        if (data == null || data.isEmpty()) return;
+        List<Double> last = data.get(data.size() - 1);
+        if (last.size() < 5) return;
+        String json = "[" + last.get(0).longValue() + ","
+                + last.get(1) + "," + last.get(2) + ","
+                + last.get(3) + "," + last.get(4) + "]";
+        b.chart.evaluateJavascript("updateLastCandle('" + json + "')", null);
+    }
+
+    private String candlesToJson(List<List<Double>> candles) {
+        StringBuilder sb = new StringBuilder("[");
+        for (int i = 0; i < candles.size(); i++) {
+            List<Double> c = candles.get(i);
+            if (c.size() < 5) continue;
+            if (sb.length() > 1) sb.append(",");
+            sb.append("[").append(c.get(0).longValue()).append(",")
+              .append(c.get(1)).append(",").append(c.get(2)).append(",")
+              .append(c.get(3)).append(",").append(c.get(4)).append("]");
+        }
+        return sb.append("]").toString();
+    }
+
     @Override public void onViewCreated(@NonNull View v, @Nullable Bundle saved) {
         prefs = new UserPrefs(requireContext());
         cryptoVm = new ViewModelProvider(requireActivity()).get(CryptoViewModel.class);
         tradingVm = new ViewModelProvider(requireActivity()).get(TradingViewModel.class);
+
+        setupWebView();
 
         String coinId = prefs.getActiveCoinId();
         cryptoVm.setActiveCoin(coinId);
@@ -54,14 +110,24 @@ public class TerminalFragment extends Fragment {
         b.btnWallet.setOnClickListener(x ->
             new DepositBottomSheetFragment().show(getChildFragmentManager(), "deposit"));
 
-        // Chart update dari chartCandles (real-time)
-        cryptoVm.chartCandles.observe(getViewLifecycleOwner(),
-            data -> b.chart.setOhlcData(data));
+        // Historical data → reset chart (dipanggil saat coin/timeframe ganti)
+        cryptoVm.ohlcData.observe(getViewLifecycleOwner(), data -> {
+            if (data == null) return;
+            if (!chartReady) { pendingInitData = data; return; }
+            evalInitChart(data);
+        });
 
-        // Harga live → update price line di chart
+        // Live candle update setiap 1 detik
+        cryptoVm.chartCandles.observe(getViewLifecycleOwner(), data -> {
+            if (!chartReady || data == null) return;
+            evalUpdateLastCandle(data);
+        });
+
+        // Harga live → price line dashed
         cryptoVm.livePrice.observe(getViewLifecycleOwner(), price -> {
             currentPrice = price;
-            b.chart.setCurrentPrice(price);
+            if (chartReady)
+                b.chart.evaluateJavascript("setCurrentPrice(" + price + ")", null);
         });
 
         tradingVm.virtualBalance.observe(getViewLifecycleOwner(), bal ->
@@ -185,14 +251,37 @@ public class TerminalFragment extends Fragment {
                     nameSymbolImg[2] = c.image;
                 });
         }
-        tradingVm.placeTrade(coinId, nameSymbolImg[0], nameSymbolImg[1], nameSymbolImg[2],
-            direction, stakeAmount, profitPercent, currentPrice, durationSeconds, durationLabel);
+        TradeEntity trade = tradingVm.placeTrade(coinId, nameSymbolImg[0], nameSymbolImg[1],
+            nameSymbolImg[2], direction, stakeAmount, profitPercent, currentPrice, durationSeconds, durationLabel);
+        if (chartReady) {
+            b.chart.evaluateJavascript("setTradeMarker('" + direction + "')", null);
+            b.chart.evaluateJavascript("setEntryLine(" + currentPrice + ",'" + direction + "')", null);
+        }
+        ActiveTradeBottomSheetFragment.newInstance(trade)
+            .show(getChildFragmentManager(), "active_trade");
         Toast.makeText(requireContext(),
             direction.equals("UP") ? "↑ Posisi NAIK dibuka!" : "↓ Posisi TURUN dibuka!",
             Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void onTradeReversed(TradeEntity newTrade) {
+        if (!chartReady) return;
+        b.chart.evaluateJavascript("setTradeMarker('" + newTrade.direction + "')", null);
+        b.chart.evaluateJavascript("setEntryLine(" + newTrade.entryPrice + ",'" + newTrade.direction + "')", null);
+    }
+
+    @Override
+    public void onTradeClosed() {
+        if (chartReady) b.chart.evaluateJavascript("clearEntryLine()", null);
+    }
+
     @Override public void onResume() { super.onResume(); cryptoVm.startPricePolling(); }
     @Override public void onPause() { super.onPause(); cryptoVm.stopPricePolling(); }
-    @Override public void onDestroyView() { super.onDestroyView(); b = null; }
+    @Override public void onDestroyView() {
+        super.onDestroyView();
+        chartReady = false;
+        pendingInitData = null;
+        b = null;
+    }
 }

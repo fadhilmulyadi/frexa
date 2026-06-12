@@ -31,16 +31,22 @@ public class TradingViewModel extends AndroidViewModel {
         virtualBalance.setValue(prefs.getBalance());
     }
 
-    public void placeTrade(String coinId, String coinName, String coinSymbol,
+    public TradeEntity placeTrade(String coinId, String coinName, String coinSymbol,
                            String imgUrl, String direction, double stake,
                            int profitPct, double entryPrice, int durSec, String durLabel) {
-        repo.placeTrade(coinId, coinName, coinSymbol, imgUrl, direction,
+        TradeEntity t = repo.placeTrade(coinId, coinName, coinSymbol, imgUrl, direction,
                         stake, profitPct, entryPrice, durSec, durLabel);
         virtualBalance.postValue(prefs.getBalance());
+        return t;
     }
 
     public void closeTrade(TradeEntity trade, double exitPrice) {
         repo.closeTrade(trade, exitPrice);
+        virtualBalance.postValue(prefs.getBalance());
+    }
+
+    public void earlyClose(TradeEntity trade, double exitPrice) {
+        repo.earlyClose(trade, exitPrice);
         virtualBalance.postValue(prefs.getBalance());
     }
 

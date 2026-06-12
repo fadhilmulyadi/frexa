@@ -143,6 +143,19 @@ public class CryptoRepository {
             });
     }
 
+    public void fetchBitfinexTicker(String symbol, PriceCallback callback) {
+        bitfinexApi.getTicker(symbol).enqueue(new Callback<List<Double>>() {
+            @Override
+            public void onResponse(Call<List<Double>> c, Response<List<Double>> r) {
+                if (r.isSuccessful() && r.body() != null && r.body().size() >= 7) {
+                    // Index 6 is LAST_PRICE in Bitfinex V2 Ticker
+                    callback.onPrice(r.body().get(6));
+                }
+            }
+            @Override public void onFailure(Call<List<Double>> c, Throwable t) {}
+        });
+    }
+
     /**
      * Bitfinex format: [MTS, OPEN, CLOSE, HIGH, LOW, VOLUME]
      * Chart format: [Timestamp, Open, High, Low, Close]

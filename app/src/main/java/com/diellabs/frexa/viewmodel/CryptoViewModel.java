@@ -4,6 +4,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
+import com.diellabs.frexa.data.remote.api.BitfinexWebSocketManager;
 import com.diellabs.frexa.data.remote.api.CoinSymbolMapper;
 import com.diellabs.frexa.data.remote.model.*;
 import com.diellabs.frexa.data.repository.CryptoRepository;
@@ -22,6 +23,8 @@ public class CryptoViewModel extends AndroidViewModel {
 
     private final CryptoRepository repo;
     private final LiveCandleBuilder candleBuilder = new LiveCandleBuilder(60);
+    private final BitfinexWebSocketManager wsManager = new BitfinexWebSocketManager();
+
     private String activeCoinId = "bitcoin";
     private String activeSymbol = "tBTCUSD";
 
@@ -44,6 +47,8 @@ public class CryptoViewModel extends AndroidViewModel {
             candleBuilder.setHistoricalCandles(data);
             chartCandles.postValue(candleBuilder.getCandles());
         });
+
+        startPricePolling();
     }
 
     public void setTimeframe(int seconds) {
@@ -60,10 +65,18 @@ public class CryptoViewModel extends AndroidViewModel {
     public void fetchMarketChart(String id) { repo.fetchMarketChart(id, marketChart); }
 
     public void startPricePolling() {
-        // Disabled bitfinex websocket for now
+        wsManager.connect(activeSymbol, price -> {
+            candleBuilder.addTick(price, System.currentTimeMillis());
+            chartCandles.postValue(candleBuilder.getCandles());
+            livePrice.postValue(price);
+        });
     }
 
     public void stopPricePolling() {
-        // Disabled bitfinex websocket for now
+        wsManager.disconnect();
+    }
+
+    @Override protected void onCleared() {
+        wsManager.disconnect();
     }
 }

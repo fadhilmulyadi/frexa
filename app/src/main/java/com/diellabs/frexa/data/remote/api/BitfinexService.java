@@ -17,4 +17,13 @@ public interface BitfinexService {
         @Path("symbol") String symbol,
         @Query("limit") int limit
     );
+
+    /**
+     * Bitfinex Ticker returns: [BID, BID_SIZE, ASK, ASK_SIZE, DAILY_CHANGE, ...]
+     * Last price is usually at index 6 or 7.
+     */
+    @GET("bitfinex/ticker/{symbol}")
+    Call<List<Double>> getTicker(
+        @Path("symbol") String symbol
+    );
 }

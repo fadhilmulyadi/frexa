@@ -9,13 +9,11 @@ import java.util.concurrent.TimeUnit;
 public class RetrofitClient {
     private static final String COINGECKO = "https://api.coingecko.com/api/v3/";
     private static final String GEMINI    = "https://generativelanguage.googleapis.com/";
-    private static final String BITGET    = "https://api.bitget.com/";
     // Cloudflare Worker Proxy for Bitfinex
     private static final String PROXY_BASE = "https://frexa-api-gateaway.dielnzee.workers.dev/";
 
     private static CoinGeckoService coinGecko;
     private static GeminiService    gemini;
-    private static BitgetService    bitget;
     private static BitfinexService  bitfinex;
 
     private static OkHttpClient client() {
@@ -41,14 +39,6 @@ public class RetrofitClient {
                 .addConverterFactory(GsonConverterFactory.create()).build()
                 .create(GeminiService.class);
         return gemini;
-    }
-
-    public static BitgetService getBitgetService() {
-        if (bitget == null) bitget = new Retrofit.Builder()
-                .baseUrl(BITGET).client(client())
-                .addConverterFactory(GsonConverterFactory.create()).build()
-                .create(BitgetService.class);
-        return bitget;
     }
 
     public static BitfinexService getBitfinexService() {

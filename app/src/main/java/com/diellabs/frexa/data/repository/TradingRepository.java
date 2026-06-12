@@ -24,7 +24,7 @@ public class TradingRepository {
     public LiveData<List<TradeEntity>> getOpenTrades() { return dao.getOpenTrades(); }
     public LiveData<List<TradeEntity>> getClosedTrades() { return dao.getClosedTrades(); }
 
-    public void placeTrade(String coinId, String coinName, String coinSymbol,
+    public TradeEntity placeTrade(String coinId, String coinName, String coinSymbol,
                            String coinImageUrl, String direction, double stake,
                            int profitPercent, double entryPrice,
                            int durationSec, String durationLabel) {
@@ -40,6 +40,16 @@ public class TradingRepository {
         t.status = "OPEN";
         prefs.setBalance(prefs.getBalance() - (float) stake);
         exec.diskIO().execute(() -> dao.insert(t));
+        return t;
+    }
+
+    public void earlyClose(TradeEntity t, double exitPrice) {
+        t.exitPrice = exitPrice;
+        t.status = "CLOSED";
+        t.isWin = false;
+        t.pnl = -(t.stakeAmount * 0.46);
+        prefs.setBalance(prefs.getBalance() + (float)(t.stakeAmount * 0.54));
+        exec.diskIO().execute(() -> dao.update(t));
     }
 
     public void closeTrade(TradeEntity t, double exitPrice) {

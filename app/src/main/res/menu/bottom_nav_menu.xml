@@ -2,9 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/homeFragment"
         android:icon="@drawable/ic_home" android:title="@string/tab_home" />
-    <item android:id="@+id/marketFragment"
-        android:icon="@drawable/ic_market" android:title="Market" />
-    <item android:id="@+id/transaksiFragment"
+<item android:id="@+id/transaksiFragment"
         android:icon="@drawable/ic_transaksi" android:title="@string/tab_transaksi" />
     <item android:id="@+id/terminalFragment"
         android:icon="@drawable/ic_terminal" android:title="@string/tab_terminal" />
