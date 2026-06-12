@@ -15,6 +15,7 @@ public class UserPrefs {
     private static final String KEY_BALANCE = "virtual_balance";
     private static final String KEY_USD_TO_IDR = "usd_to_idr_rate";
     private static final String KEY_DAILY_SNAPSHOTS = "daily_snapshots";
+    private static final String KEY_DARK_MODE = "is_dark_mode";
 
     private static final float DEFAULT_BALANCE = 100_000_000f;
     private static final float DEFAULT_USD_TO_IDR = 16_200f;
@@ -43,6 +44,9 @@ public class UserPrefs {
 
     public float getUsdToIdr() { return prefs.getFloat(KEY_USD_TO_IDR, DEFAULT_USD_TO_IDR); }
     public void setUsdToIdr(float v) { prefs.edit().putFloat(KEY_USD_TO_IDR, v).apply(); }
+
+    public boolean isDarkMode() { return prefs.getBoolean(KEY_DARK_MODE, true); }
+    public void setDarkMode(boolean v) { prefs.edit().putBoolean(KEY_DARK_MODE, v).apply(); }
 
     public void logout() { prefs.edit().clear().apply(); }
 
