@@ -21,6 +21,7 @@ import com.diellabs.frexa.data.local.entity.OrderEntity;
 import com.diellabs.frexa.data.remote.model.CoinMarket;
 import com.diellabs.frexa.ui.custom.MonogramView;
 import com.diellabs.frexa.util.CurrencyFormatter;
+import com.diellabs.frexa.util.ThemeManager;
 import com.diellabs.frexa.util.UserPrefs;
 import com.diellabs.frexa.viewmodel.CryptoViewModel;
 import com.diellabs.frexa.viewmodel.PortfolioViewModel;
@@ -51,6 +52,13 @@ public class HomeFragment extends Fragment {
         portfolioVM = new ViewModelProvider(requireActivity()).get(PortfolioViewModel.class);
         tradingVM = new ViewModelProvider(requireActivity()).get(TradingViewModel.class);
         userPrefs = new UserPrefs(requireContext());
+
+        ImageView btnTheme = view.findViewById(R.id.btn_theme);
+        btnTheme.setImageResource(userPrefs.isDarkMode() ? R.drawable.ic_sun : R.drawable.ic_moon);
+        btnTheme.setOnClickListener(v -> {
+            ThemeManager.toggle(userPrefs);
+            requireActivity().recreate();
+        });
 
         tvPortfolioValue = view.findViewById(R.id.tv_portfolio_value);
         tvChange24h = view.findViewById(R.id.tv_change_24h);
