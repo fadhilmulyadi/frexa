@@ -219,11 +219,11 @@ public class HomeFragment extends Fragment {
             cellParams.setMargins(dp(3), 0, dp(3), 0);
             cell.setLayoutParams(cellParams);
 
-            int bgColor = isUp ? 0x1A3DD68C : 0x1AFF6259;
+            int bgColor = getResources().getColor(isUp ? R.color.frx_up_12 : R.color.frx_down_12, null);
             android.graphics.drawable.GradientDrawable bg = new android.graphics.drawable.GradientDrawable();
             bg.setCornerRadius(dp(10));
             bg.setColor(bgColor);
-            if (isToday) bg.setStroke(dp(1), 0x73E8B25A);
+            if (isToday) bg.setStroke(dp(1), getResources().getColor(R.color.frx_amber_22, null));
             cell.setBackground(bg);
             cell.setPadding(dp(4), dp(9), dp(4), dp(9));
 
