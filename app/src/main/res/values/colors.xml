@@ -4,29 +4,29 @@
     <color name="frx_amber">#E8B25A</color>
     <color name="frx_amber_dark">#9A6A1F</color>
 
-    <!-- Semantic -->
-    <color name="frx_up">#3DD68C</color>
-    <color name="frx_down">#FF6259</color>
+    <!-- Semantic — darkened for contrast on light background -->
+    <color name="frx_up">#1F9D5B</color>
+    <color name="frx_down">#E03B3B</color>
 
-    <!-- Dark surfaces -->
-    <color name="frx_bg">#0B0D0F</color>
-    <color name="frx_card">#13171B</color>
-    <color name="frx_surface">#1B2025</color>
+    <!-- Light surfaces -->
+    <color name="frx_bg">#F7F8FA</color>
+    <color name="frx_card">#FFFFFF</color>
+    <color name="frx_surface">#EFF1F4</color>
 
     <!-- Text -->
     <color name="white">#FFFFFF</color>
-    <color name="frx_text">#EDF1F4</color>
-    <color name="frx_text_2">#9AA4AD</color>
-    <color name="frx_text_3">#5C666F</color>
-    <color name="frx_hairline">#0FFFFFFF</color>
+    <color name="frx_text">#1B1D1F</color>
+    <color name="frx_text_2">#6E747B</color>
+    <color name="frx_text_3">#9AA4AD</color>
+    <color name="frx_hairline">#12000000</color>
     <color name="frx_cta_text">#07130C</color>
 
-    <!-- Up/Down with opacity variants -->
-    <color name="frx_up_12">#1F3DD68C</color>
-    <color name="frx_down_12">#1FFF6259</color>
+    <!-- Opacity variants -->
+    <color name="frx_up_12">#1F1F9D5B</color>
+    <color name="frx_down_12">#1FE03B3B</color>
     <color name="frx_amber_07">#12E8B25A</color>
     <color name="frx_amber_22">#38E8B25A</color>
 
-    <!-- Blue accent for ETH allocation bar -->
+    <!-- Blue accent -->
     <color name="frx_blue_accent">#8AA7C4</color>
 </resources>
