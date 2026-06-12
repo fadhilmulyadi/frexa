@@ -15,8 +15,8 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private NavController navController;
     private static final List<Integer> BOTTOM_NAV_IDS = Arrays.asList(
-        R.id.homeFragment, R.id.transaksiFragment,
-        R.id.terminalFragment, R.id.bantuanFragment
+        R.id.homeFragment, R.id.marketsFragment, R.id.portfolioFragment,
+        R.id.ordersFragment, R.id.watchlistFragment
     );
 
     @Override
@@ -35,13 +35,6 @@ public class MainActivity extends AppCompatActivity {
         navController.addOnDestinationChangedListener((c, dest, a) ->
             binding.bottomNav.setVisibility(
                 BOTTOM_NAV_IDS.contains(dest.getId()) ? View.VISIBLE : View.GONE));
-
-        if (prefs.isLoggedIn()) navController.navigate(R.id.homeFragment);
-
-        if (getIntent().hasExtra("open_terminal")) {
-            prefs.setActiveCoinId(getIntent().getStringExtra("open_terminal"));
-            navController.navigate(R.id.terminalFragment);
-        }
     }
 
     @Override
