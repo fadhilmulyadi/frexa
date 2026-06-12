@@ -10,17 +10,11 @@
         android:layout_width="36dp"
         android:layout_height="36dp">
 
-        <com.diellabs.frexa.ui.custom.MonogramView
-            android:id="@+id/monogram"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
         <ImageView
             android:id="@+id/coin_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:visibility="gone" />
+            android:scaleType="centerCrop" />
     </FrameLayout>
 
     <LinearLayout
@@ -46,11 +40,6 @@
             android:textColor="@color/frx_text_2"
             android:textSize="11sp" />
     </LinearLayout>
-
-    <com.diellabs.frexa.ui.custom.RangeMeterView
-        android:id="@+id/range_meter"
-        android:layout_width="62dp"
-        android:layout_height="20dp" />
 
     <LinearLayout
         android:layout_width="wrap_content"

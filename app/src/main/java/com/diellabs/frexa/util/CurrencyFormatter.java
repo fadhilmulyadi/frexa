@@ -44,15 +44,15 @@ public class CurrencyFormatter {
 
     public static String formatCompact(double value) {
         double abs = Math.abs(value);
-        if (abs >= 1_000_000_000_000_000L) { // >= 1 quadrillion
+        if (abs >= 1_000_000_000_000_000L) {
             return new DecimalFormat("#,##0", ID_SYMBOLS).format(value / 1_000_000_000_000L) + " rb T";
-        } else if (abs >= 1_000_000_000_000L) { // >= 1 trillion
+        } else if (abs >= 1_000_000_000_000L) {
             return new DecimalFormat("#,##0.#", ID_SYMBOLS).format(value / 1_000_000_000_000L) + " T";
-        } else if (abs >= 1_000_000_000L) { // >= 1 billion (miliar)
+        } else if (abs >= 1_000_000_000L) {
             return new DecimalFormat("#,##0.#", ID_SYMBOLS).format(value / 1_000_000_000L) + " M";
-        } else if (abs >= 1_000_000L) { // >= 1 million (juta)
+        } else if (abs >= 1_000_000L) {
             return new DecimalFormat("#,##0.#", ID_SYMBOLS).format(value / 1_000_000L) + " jt";
-        } else if (abs >= 1_000L) { // >= 1 thousand (ribu)
+        } else if (abs >= 1_000L) {
             return new DecimalFormat("#,##0.#", ID_SYMBOLS).format(value / 1_000L) + " rb";
         } else {
             return new DecimalFormat("#,##0", ID_SYMBOLS).format(value);

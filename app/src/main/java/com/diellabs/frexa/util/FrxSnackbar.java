@@ -19,6 +19,7 @@ public class FrxSnackbar {
         show(anchor, title, detail, actionLabel, onAction, false);
     }
 
+    @android.annotation.SuppressLint("RestrictedApi")
     private static void show(View anchor, String title, String detail, String actionLabel,
             Runnable onAction, boolean isSuccess) {
         Snackbar snackbar = Snackbar.make(anchor, "", 3000);

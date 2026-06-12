@@ -1,9 +1,12 @@
 package com.diellabs.frexa.ui.markets;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -16,8 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.diellabs.frexa.R;
 import com.diellabs.frexa.data.remote.model.CoinMarket;
-import com.diellabs.frexa.ui.custom.MonogramView;
-import com.diellabs.frexa.ui.custom.RangeMeterView;
 import com.diellabs.frexa.util.CurrencyFormatter;
 import com.diellabs.frexa.viewmodel.CryptoViewModel;
 import java.text.SimpleDateFormat;
@@ -43,11 +44,33 @@ public class MarketsFragment extends Fragment {
         adapter = new CoinMarketAdapter();
         rv.setAdapter(adapter);
 
+        androidx.swiperefreshlayout.widget.SwipeRefreshLayout swipeRefresh = view.findViewById(R.id.swipe_refresh);
+        swipeRefresh.setColorSchemeResources(R.color.frx_amber);
+        swipeRefresh.setProgressBackgroundColorSchemeResource(R.color.frx_surface);
+        swipeRefresh.setOnRefreshListener(() -> {
+            cryptoVM.fetchMarkets();
+            cryptoVM.fetchGlobalData();
+            cryptoVM.fetchFearGreed();
+        });
+
+        cryptoVM.isLoading.observe(getViewLifecycleOwner(), loading -> {
+            if (loading != null && !loading) {
+                swipeRefresh.setRefreshing(false);
+            }
+        });
+
         TextView tvBtcDom = view.findViewById(R.id.tv_btc_dominance);
         TextView tvFearGreed = view.findViewById(R.id.tv_fear_greed);
         TextView tvFearGreedLabel = view.findViewById(R.id.tv_fear_greed_label);
         TextView tvGlobalMcap = view.findViewById(R.id.tv_global_mcap);
         TextView tvTimestamp = view.findViewById(R.id.tv_timestamp);
+
+        EditText etSearch = view.findViewById(R.id.et_search);
+        etSearch.addTextChangedListener(new TextWatcher() {
+            public void beforeTextChanged(CharSequence s, int st, int c, int a) {}
+            public void onTextChanged(CharSequence s, int st, int b, int c) {}
+            public void afterTextChanged(Editable s) { adapter.filter(s.toString()); }
+        });
 
         TextView tabGainers = view.findViewById(R.id.tab_gainers);
         TextView tabLosers = view.findViewById(R.id.tab_losers);
@@ -120,10 +143,26 @@ public class MarketsFragment extends Fragment {
     }
 
     static class CoinMarketAdapter extends RecyclerView.Adapter<CoinMarketAdapter.VH> {
+        private List<CoinMarket> allItems = new ArrayList<>();
         private List<CoinMarket> items = new ArrayList<>();
 
         void submit(List<CoinMarket> list) {
-            items = list != null ? new ArrayList<>(list) : new ArrayList<>();
+            allItems = list != null ? new ArrayList<>(list) : new ArrayList<>();
+            items = new ArrayList<>(allItems);
+            notifyDataSetChanged();
+        }
+
+        void filter(String query) {
+            if (query == null || query.trim().isEmpty()) {
+                items = new ArrayList<>(allItems);
+            } else {
+                String q = query.toLowerCase().trim();
+                items = new ArrayList<>();
+                for (CoinMarket c : allItems) {
+                    if (c.name.toLowerCase().contains(q) || c.symbol.toLowerCase().contains(q))
+                        items.add(c);
+                }
+            }
             notifyDataSetChanged();
         }
 
@@ -136,18 +175,13 @@ public class MarketsFragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull VH h, int position) {
             CoinMarket c = items.get(position);
-            h.monogram.setSymbol(c.symbol.toUpperCase());
-
             if (c.image != null && !c.image.isEmpty()) {
-                h.coinImage.setVisibility(View.VISIBLE);
                 Glide.with(h.itemView.getContext())
                     .load(c.image)
                     .circleCrop()
                     .into(h.coinImage);
-                h.monogram.setVisibility(View.GONE);
             } else {
-                h.coinImage.setVisibility(View.GONE);
-                h.monogram.setVisibility(View.VISIBLE);
+                h.coinImage.setImageDrawable(null);
             }
 
             h.tvSymbol.setText(c.symbol.toUpperCase());
@@ -158,8 +192,6 @@ public class MarketsFragment extends Fragment {
             h.tvChange.setText(CurrencyFormatter.formatPercent(c.priceChangePercentage24h));
             h.tvChange.setTextColor(h.itemView.getContext().getResources().getColor(
                 isUp ? R.color.frx_up : R.color.frx_down, null));
-
-            h.rangeMeter.setData(c.low24h, c.high24h, c.currentPrice);
 
             h.itemView.setOnClickListener(v -> {
                 Bundle args = new Bundle();
@@ -174,20 +206,16 @@ public class MarketsFragment extends Fragment {
         public int getItemCount() { return items.size(); }
 
         static class VH extends RecyclerView.ViewHolder {
-            MonogramView monogram;
             ImageView coinImage;
             TextView tvSymbol, tvName, tvPrice, tvChange;
-            RangeMeterView rangeMeter;
 
             VH(View v) {
                 super(v);
-                monogram = v.findViewById(R.id.monogram);
                 coinImage = v.findViewById(R.id.coin_image);
                 tvSymbol = v.findViewById(R.id.tv_symbol);
                 tvName = v.findViewById(R.id.tv_name);
                 tvPrice = v.findViewById(R.id.tv_price);
                 tvChange = v.findViewById(R.id.tv_change);
-                rangeMeter = v.findViewById(R.id.range_meter);
             }
         }
     }

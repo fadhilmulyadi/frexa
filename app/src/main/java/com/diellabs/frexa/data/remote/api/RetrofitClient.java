@@ -9,12 +9,10 @@ import java.util.concurrent.TimeUnit;
 public class RetrofitClient {
     private static final String COINGECKO    = "https://api.coingecko.com/api/v3/";
     private static final String COINPAPRIKA  = "https://api.coinpaprika.com/v1/";
-    private static final String GEMINI       = "https://generativelanguage.googleapis.com/";
     private static final String FEAR_GREED   = "https://api.alternative.me/";
 
     private static CoinGeckoService  coinGecko;
     private static CoinPaprikaService coinPaprika;
-    private static GeminiService     gemini;
     private static FearGreedService  fearGreed;
 
     private static OkHttpClient client() {
@@ -40,14 +38,6 @@ public class RetrofitClient {
                 .addConverterFactory(GsonConverterFactory.create()).build()
                 .create(CoinPaprikaService.class);
         return coinPaprika;
-    }
-
-    public static GeminiService getGeminiService() {
-        if (gemini == null) gemini = new Retrofit.Builder()
-                .baseUrl(GEMINI).client(client())
-                .addConverterFactory(GsonConverterFactory.create()).build()
-                .create(GeminiService.class);
-        return gemini;
     }
 
     public static FearGreedService getFearGreedService() {

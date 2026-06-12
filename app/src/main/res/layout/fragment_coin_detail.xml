@@ -62,16 +62,11 @@
                 <FrameLayout
                     android:layout_width="30dp"
                     android:layout_height="30dp">
-                    <com.diellabs.frexa.ui.custom.MonogramView
-                        android:id="@+id/monogram"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
                     <ImageView
                         android:id="@+id/coin_image"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:scaleType="centerCrop"
-                        android:visibility="gone" />
+                        android:scaleType="centerCrop" />
                 </FrameLayout>
 
                 <TextView
@@ -132,87 +127,6 @@
                     android:text="24 jam"
                     android:textColor="@color/frx_text_3"
                     android:textSize="11sp" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <!-- 24h Range Meter -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/bg_card"
-            android:orientation="vertical"
-            android:padding="16dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/label_24h_low"
-                    android:textColor="@color/frx_text_3"
-                    android:textSize="9.5sp"
-                    android:fontFamily="@font/spline_sans_mono" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/label_price_position"
-                    android:textColor="@color/frx_text_3"
-                    android:textSize="9.5sp"
-                    android:fontFamily="@font/spline_sans_mono" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/label_24h_high"
-                    android:textColor="@color/frx_text_3"
-                    android:textSize="9.5sp"
-                    android:fontFamily="@font/spline_sans_mono" />
-            </LinearLayout>
-
-            <com.diellabs.frexa.ui.custom.RangeMeterView
-                android:id="@+id/range_meter"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_marginTop="10dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_low"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textColor="@color/frx_text_2"
-                    android:textSize="11.5sp"
-                    android:fontFamily="@font/spline_sans_mono" />
-
-                <TextView
-                    android:id="@+id/tv_high"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/frx_text_2"
-                    android:textSize="11.5sp"
-                    android:fontFamily="@font/spline_sans_mono" />
             </LinearLayout>
         </LinearLayout>
 

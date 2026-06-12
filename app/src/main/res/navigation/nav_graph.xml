@@ -35,6 +35,4 @@
         <argument android:name="coinName" app:argType="string" android:defaultValue="" />
     </fragment>
 
-    <fragment android:id="@+id/profileFragment"
-        android:name="com.diellabs.frexa.ui.profile.ProfileFragment" />
 </navigation>

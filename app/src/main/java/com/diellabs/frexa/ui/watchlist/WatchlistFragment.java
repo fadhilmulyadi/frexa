@@ -18,7 +18,6 @@ import com.bumptech.glide.Glide;
 import com.diellabs.frexa.R;
 import com.diellabs.frexa.data.local.entity.WatchlistEntity;
 import com.diellabs.frexa.data.remote.model.CoinMarket;
-import com.diellabs.frexa.ui.custom.MonogramView;
 import com.diellabs.frexa.util.CurrencyFormatter;
 import com.diellabs.frexa.viewmodel.CryptoViewModel;
 import com.diellabs.frexa.viewmodel.WatchlistViewModel;
@@ -90,23 +89,16 @@ public class WatchlistFragment extends Fragment {
         iconParams.setMarginEnd(dp(12));
         iconContainer.setLayoutParams(iconParams);
 
-        MonogramView monogram = new MonogramView(requireContext());
-        monogram.setSymbol(w.symbol.toUpperCase());
-        monogram.setLayoutParams(new FrameLayout.LayoutParams(
-            FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
-        iconContainer.addView(monogram);
-
         ImageView coinImg = new ImageView(requireContext());
         coinImg.setLayoutParams(new FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
         coinImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        coinImg.setVisibility(View.GONE);
         iconContainer.addView(coinImg);
 
         if (market != null && market.image != null && !market.image.isEmpty()) {
             Glide.with(requireContext()).load(market.image).circleCrop().into(coinImg);
-            coinImg.setVisibility(View.VISIBLE);
-            monogram.setVisibility(View.GONE);
+        } else {
+            coinImg.setImageDrawable(null);
         }
 
         row.addView(iconContainer);

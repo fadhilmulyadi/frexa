@@ -14,8 +14,6 @@ import androidx.navigation.Navigation;
 import com.diellabs.frexa.R;
 import com.diellabs.frexa.data.remote.model.CoinDetail;
 import com.diellabs.frexa.data.remote.model.CoinMarket;
-import com.diellabs.frexa.ui.custom.MonogramView;
-import com.diellabs.frexa.ui.custom.RangeMeterView;
 import com.diellabs.frexa.util.CurrencyFormatter;
 import com.diellabs.frexa.viewmodel.CryptoViewModel;
 import com.diellabs.frexa.viewmodel.PortfolioViewModel;
@@ -42,15 +40,11 @@ public class CoinDetailFragment extends Fragment implements OrderBottomSheetFrag
             coinName = getArguments().getString("coinName", "");
         }
 
-        MonogramView monogram = view.findViewById(R.id.monogram);
         ImageView coinImage = view.findViewById(R.id.coin_image);
         TextView tvPair = view.findViewById(R.id.tv_pair);
         TextView tvCoinName = view.findViewById(R.id.tv_coin_name);
         TextView tvPrice = view.findViewById(R.id.tv_price);
         TextView tvChange = view.findViewById(R.id.tv_change);
-        TextView tvLow = view.findViewById(R.id.tv_low);
-        TextView tvHigh = view.findViewById(R.id.tv_high);
-        RangeMeterView rangeMeter = view.findViewById(R.id.range_meter);
         TextView perf24h = view.findViewById(R.id.perf_24h);
         TextView perf7d = view.findViewById(R.id.perf_7d);
         TextView perf30d = view.findViewById(R.id.perf_30d);
@@ -62,7 +56,6 @@ public class CoinDetailFragment extends Fragment implements OrderBottomSheetFrag
         TextView statSupply = view.findViewById(R.id.stat_supply);
         TextView statAth = view.findViewById(R.id.stat_ath);
 
-        monogram.setSymbol(coinSymbol.toUpperCase());
         tvPair.setText(coinSymbol.toUpperCase() + "/IDR");
         tvCoinName.setText(coinName);
 
@@ -80,8 +73,8 @@ public class CoinDetailFragment extends Fragment implements OrderBottomSheetFrag
 
             if (detail.image != null && !detail.image.isEmpty()) {
                 Glide.with(requireContext()).load(detail.image).circleCrop().into(coinImage);
-                coinImage.setVisibility(View.VISIBLE);
-                monogram.setVisibility(View.GONE);
+            } else {
+                coinImage.setImageDrawable(null);
             }
 
             applyPerf(perf7d, md.priceChange7d);
@@ -106,7 +99,7 @@ public class CoinDetailFragment extends Fragment implements OrderBottomSheetFrag
         cryptoVM.errorMessage.observe(getViewLifecycleOwner(), error -> {
             if (error != null && !error.isEmpty()) {
                 android.widget.Toast.makeText(requireContext(), error, android.widget.Toast.LENGTH_SHORT).show();
-                cryptoVM.errorMessage.setValue(""); // Clear after showing
+                cryptoVM.errorMessage.setValue("");
             }
         });
 
@@ -151,16 +144,12 @@ public class CoinDetailFragment extends Fragment implements OrderBottomSheetFrag
                     if (c.image != null && !c.image.isEmpty()) {
                         Glide.with(requireContext()).load(c.image).circleCrop().into(coinImage);
                         coinImage.setVisibility(View.VISIBLE);
-                        monogram.setVisibility(View.GONE);
                     }
                     tvPrice.setText(CurrencyFormatter.formatIdrFull(c.currentPrice));
                     boolean isUp = c.priceChangePercentage24h >= 0;
                     tvChange.setText(CurrencyFormatter.formatPercent(c.priceChangePercentage24h));
                     tvChange.setTextColor(getResources().getColor(isUp ? R.color.frx_up : R.color.frx_down, null));
                     tvChange.setBackgroundResource(isUp ? R.drawable.bg_chip_up : R.drawable.bg_chip_down);
-                    tvLow.setText(CurrencyFormatter.formatIdrFull(c.low24h));
-                    tvHigh.setText(CurrencyFormatter.formatIdrFull(c.high24h));
-                    rangeMeter.setData(c.low24h, c.high24h, c.currentPrice);
                     perf24h.setText(CurrencyFormatter.formatPercent(c.priceChangePercentage24h));
                     perf24h.setTextColor(getResources().getColor(isUp ? R.color.frx_up : R.color.frx_down, null));
                     perfVol.setText(CurrencyFormatter.formatCompact(c.totalVolume));
@@ -199,20 +188,30 @@ public class CoinDetailFragment extends Fragment implements OrderBottomSheetFrag
     @Override
     public void onBuySuccess(String symbol, double qty, double price, double fee, double total, String txId) {
         OrderResultDialog dialog = OrderResultDialog.buySuccess(symbol, qty, price, fee, total, txId);
+        dialog.setOnResultActionListener(() -> {
+            if (getView() != null) Navigation.findNavController(getView()).navigate(R.id.ordersFragment);
+        });
         dialog.show(getChildFragmentManager(), "result");
-        FrxSnackbar.showSuccess(getView(), "Beli Berhasil", 
-            "Berhasil membeli " + CurrencyFormatter.formatCoinQty(qty) + " " + symbol, 
-            "LIHAT", () -> Navigation.findNavController(getView()).navigate(R.id.ordersFragment));
+        if (getView() != null) {
+            FrxSnackbar.showSuccess(getView(), "Beli Berhasil", 
+                "Berhasil membeli " + CurrencyFormatter.formatCoinQty(qty) + " " + symbol, 
+                null, null);
+        }
     }
 
     @Override
     public void onSellSuccess(String symbol, double qty, double price, double fee, double received, 
             double pnlPct, double pnlIdr, String txId) {
         OrderResultDialog dialog = OrderResultDialog.sellSuccess(symbol, qty, price, fee, received, pnlPct, pnlIdr, txId);
+        dialog.setOnResultActionListener(() -> {
+            if (getView() != null) Navigation.findNavController(getView()).navigate(R.id.ordersFragment);
+        });
         dialog.show(getChildFragmentManager(), "result");
-        FrxSnackbar.showSuccess(getView(), "Jual Berhasil", 
-            "Berhasil menjual " + CurrencyFormatter.formatCoinQty(qty) + " " + symbol, 
-            "LIHAT", () -> Navigation.findNavController(getView()).navigate(R.id.ordersFragment));
+        if (getView() != null) {
+            FrxSnackbar.showSuccess(getView(), "Jual Berhasil", 
+                "Berhasil menjual " + CurrencyFormatter.formatCoinQty(qty) + " " + symbol, 
+                null, null);
+        }
     }
 
     @Override

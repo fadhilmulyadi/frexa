@@ -15,7 +15,6 @@ import androidx.navigation.Navigation;
 import com.bumptech.glide.Glide;
 import com.diellabs.frexa.R;
 import com.diellabs.frexa.data.local.entity.HoldingEntity;
-import com.diellabs.frexa.ui.custom.MonogramView;
 import com.diellabs.frexa.util.CurrencyFormatter;
 import com.diellabs.frexa.viewmodel.PortfolioViewModel;
 import com.diellabs.frexa.viewmodel.CryptoViewModel;
@@ -113,21 +112,15 @@ public class PortfolioFragment extends Fragment {
         FrameLayout iconFrame = new FrameLayout(requireContext());
         iconFrame.setLayoutParams(new LinearLayout.LayoutParams(dp(36), dp(36)));
 
-        MonogramView mono = new MonogramView(requireContext());
-        mono.setSymbol(h.symbol);
-        mono.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
-        iconFrame.addView(mono);
-
         ImageView coinImg = new ImageView(requireContext());
         coinImg.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
         coinImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        coinImg.setVisibility(View.GONE);
         iconFrame.addView(coinImg);
 
         if (imageUrl != null && !imageUrl.isEmpty()) {
             Glide.with(requireContext()).load(imageUrl).circleCrop().into(coinImg);
-            coinImg.setVisibility(View.VISIBLE);
-            mono.setVisibility(View.GONE);
+        } else {
+            coinImg.setImageDrawable(null);
         }
         row.addView(iconFrame);
 
