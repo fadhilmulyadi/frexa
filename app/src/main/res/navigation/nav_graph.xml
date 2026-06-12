@@ -2,51 +2,39 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginFragment">
-
-    <fragment android:id="@+id/loginFragment"
-        android:name="com.diellabs.frexa.ui.login.LoginFragment">
-        <action android:id="@+id/action_login_to_home"
-            app:destination="@id/homeFragment"
-            app:popUpTo="@id/loginFragment" app:popUpToInclusive="true" />
-    </fragment>
+    app:startDestination="@id/homeFragment">
 
     <fragment android:id="@+id/homeFragment"
-        android:name="com.diellabs.frexa.ui.home.HomeFragment">
-        <action android:id="@+id/action_home_to_profile" app:destination="@id/profileFragment" />
-        <action android:id="@+id/action_home_to_notification" app:destination="@id/notificationFragment" />
-        <action android:id="@+id/action_home_to_asset_detail" app:destination="@id/assetDetailFragment" />
+        android:name="com.diellabs.frexa.ui.home.HomeFragment" />
+
+    <fragment android:id="@+id/marketsFragment"
+        android:name="com.diellabs.frexa.ui.markets.MarketsFragment">
+        <action android:id="@+id/action_markets_to_coin_detail"
+            app:destination="@id/coinDetailFragment" />
     </fragment>
 
-<fragment android:id="@+id/terminalFragment"
-        android:name="com.diellabs.frexa.ui.terminal.TerminalFragment" />
-    <fragment android:id="@+id/transaksiFragment"
-        android:name="com.diellabs.frexa.ui.transaksi.TransaksiFragment" />
-    <fragment android:id="@+id/bantuanFragment"
-        android:name="com.diellabs.frexa.ui.bantuan.BantuanFragment" />
-    <fragment android:id="@+id/profileFragment"
-        android:name="com.diellabs.frexa.ui.profile.ProfileFragment" />
-    <fragment android:id="@+id/notificationFragment"
-        android:name="com.diellabs.frexa.ui.notification.NotificationFragment" />
+    <fragment android:id="@+id/portfolioFragment"
+        android:name="com.diellabs.frexa.ui.portfolio.PortfolioFragment">
+        <action android:id="@+id/action_portfolio_to_coin_detail"
+            app:destination="@id/coinDetailFragment" />
+    </fragment>
 
-    <fragment android:id="@+id/assetDetailFragment"
-        android:name="com.diellabs.frexa.ui.home.AssetDetailFragment">
+    <fragment android:id="@+id/ordersFragment"
+        android:name="com.diellabs.frexa.ui.orders.OrdersFragment" />
+
+    <fragment android:id="@+id/watchlistFragment"
+        android:name="com.diellabs.frexa.ui.watchlist.WatchlistFragment">
+        <action android:id="@+id/action_watchlist_to_coin_detail"
+            app:destination="@id/coinDetailFragment" />
+    </fragment>
+
+    <fragment android:id="@+id/coinDetailFragment"
+        android:name="com.diellabs.frexa.ui.coindetail.CoinDetailFragment">
         <argument android:name="coinId" app:argType="string" />
-        <action android:id="@+id/action_asset_to_quote_history"
-            app:destination="@id/quoteHistoryFragment" />
-    </fragment>
-
-    <fragment android:id="@+id/quoteHistoryFragment"
-        android:name="com.diellabs.frexa.ui.home.QuoteHistoryFragment">
-        <argument android:name="coinId" app:argType="string" android:defaultValue="bitcoin" />
+        <argument android:name="coinSymbol" app:argType="string" android:defaultValue="" />
         <argument android:name="coinName" app:argType="string" android:defaultValue="" />
     </fragment>
 
-    <fragment android:id="@+id/addAccountFragment"
-        android:name="com.diellabs.frexa.ui.home.AddAccountFragment">
-        <action android:id="@+id/action_add_account_to_name"
-            app:destination="@id/addAccountNameFragment" />
-    </fragment>
-    <fragment android:id="@+id/addAccountNameFragment"
-        android:name="com.diellabs.frexa.ui.home.AddAccountNameFragment" />
+    <fragment android:id="@+id/profileFragment"
+        android:name="com.diellabs.frexa.ui.profile.ProfileFragment" />
 </navigation>
